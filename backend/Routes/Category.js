@@ -1,21 +1,31 @@
-const express = require("express")
+const express = require("express");
 
+// Create an instance of an Express router using the `express.Router()` method.
 const router = express.Router();
 
+// Import category controller functions
+const {
+    AddCategory,
+    getAllCategory,
+    getCategory,
+    delCategory,
+    updateCategory
+} = require("./../Controllers/Category");
 
+// Define HTTP POST method to create a new category
+router.post("/", AddCategory);
 
-// -------- categories --------- //
+// Define HTTP GET method to retrieve all categories
+router.get("/", getAllCategory);
 
-router.post("/", require("./../Controllers/Category").AddCategory);
+// Define HTTP GET method to retrieve a single category by its ID
+router.get("/:userId", getCategory);
 
-router.get("/", require("./../Controllers/Category").getAllCategory);
+// Define HTTP DELETE method to delete a category by its ID
+router.delete("/:userId", delCategory);
 
-router.get("/:userId", require("./../Controllers/Category").getCategory);
+// Define HTTP PUT method to update a category by its ID
+router.put("/:userId", updateCategory);
 
-router.delete("/:userId", require("./../Controllers/Category").delCategory);
-
-router.put("/:userId", require("./../Controllers/Category").updateCategory);
-
-
-
+// Export the router module
 module.exports = router;
