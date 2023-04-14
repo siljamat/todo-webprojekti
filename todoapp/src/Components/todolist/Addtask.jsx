@@ -1,3 +1,4 @@
+// Importing necessary modules and components
 import React from 'react';
 import * as Icon from 'react-bootstrap-icons'
 import './Addtask.css'
@@ -5,61 +6,49 @@ import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-
 const Addtask = () => {
 
-
+    // Using useNavigate hook from React Router to navigate between pages
     const navigate = useNavigate()
 
+    // Declaring state variables using useState hook
     const [taskName, settaskName] = useState("")
     const [tDate, settDate] = useState()
     const [category, setcategory] = useState()
 
     const [cateData, setcateData] = useState([])
-        
 
+    // useEffect hook to fetch category data from the server
     useEffect(() => {
-
         axios.get("http://localhost:2000/category")
             .then(async (res) => {
-
                 const rawcateData = await res.data;
-
                 setcateData(rawcateData);
-
             }).catch((err) => console.log(err))
-
     }, [])
 
-
-
-    // console.log(cateData);
-    // console.log(Category);
-
+    // Event handler function to add new task to the database
     const addHandler = (e) => {
-
         e.preventDefault()
 
         const dataObj = {
-
             taskName,
             date: tDate,
             category
-
         }
 
         console.log(dataObj);
 
+        // Making a POST request to the server to add new task
         axios.post("http://localhost:2000/todolist", dataObj)
 
-       alert("Task Added Successfully")
+        alert("Task Added Successfully")
 
-       window.location.reload()
+        // Reloading the page to reflect the changes
+        window.location.reload()
     }
 
-
-
-    return (
+     return (
         <>
             <button type='button' className='navbtn' data-bs-toggle="modal" data-bs-target="#staticBackdrop"><Icon.PlusSquare size={30} /></button>
 
