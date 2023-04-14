@@ -7,44 +7,54 @@ import './Editcategories.css';
 
 const Editcategories = () => {
 
-
+    // Use the `useNavigate` hook to access the router's `navigate` function.
     const navigate = useNavigate()
 
-    const {_id} = useParams()
-    const [cateName , setcateName] = useState("")
-    
+    // Use the `useParams` hook to access the `id` parameter from the URL.
+    const { _id } = useParams()
+
+    // Use the `useState` hook to manage the `cateName` state.
+    const [cateName, setcateName] = useState("")
+
+    // Use the `useEffect` hook to fetch the category data from the API.
     useEffect(() => {
 
+        // Send a GET request to the API endpoint for the category with the specified `_id`.
         axios.get(`http://localhost:2000/category/${_id}`)
-        .then(async (res) => {
+            .then(async (res) => {
 
-            const rawcateData = await res.data[0];
+                // Get the first element of the array returned from the API and store it in `rawcateData`.
+                const rawcateData = await res.data[0];
 
-            setcateName(rawcateData.cateName);
+                // Update the `cateName` state with the `cateName` property of `rawcateData`.
+                setcateName(rawcateData.cateName);
 
-        }).catch( (err) => console.log(err))
-        
-    },[_id])
+            }).catch( (err) => console.log(err))
 
+    }, [_id])
 
-
-
+    // Define a function to handle the form submission.
     const updateCategory = (e) => {
 
         e.preventDefault()
 
+        // Create an object `dataObj` to store the updated category data.
         const dataObj = {
             cateName
         }
 
         console.log(dataObj);
 
-     axios.put(`http://localhost:2000/category/${_id}`, dataObj)
+        // Send a PUT request to the API endpoint to update the category data.
+        axios.put(`http://localhost:2000/category/${_id}`, dataObj)
 
-    alert("Category Updated")
-    navigate("/categories")
-    
+        // Display a success message using the `alert` function.
+        alert("Category Updated")
+
+        // Navigate to the categories page.
+        navigate("/categories")
     }
+
 
 
     return (
