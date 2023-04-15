@@ -5,6 +5,8 @@ import Addtask from './Components/todolist/Addtask'
 import Task from './Components/todolist/Task';
 import Date from './Components/Date';
 import './Home.css'
+import Sidebar from './Components/category/Sidebar';
+
 
 const Home = () => {
 
@@ -33,6 +35,9 @@ const Home = () => {
                 <div>
                     <Task/>
                 </div>
+            </div>
+            <div className='sidebar'>
+                <Sidebar />
             </div>
         </>
     );
