@@ -1,5 +1,5 @@
 .backg{
-    background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+    background-color: white;
     height: 100vh;
     width: 75%;
     float: right;
@@ -9,9 +9,12 @@
     display: grid;
     justify-content: center;
     align-items: center;
-    text-decoration: underline;
     font-size: 1.3rem;
 }
+#navbtn{
+    display: none;
+}
+
 
 @media screen and (max-width: 768px) {
     .sidebar {
@@ -20,4 +23,13 @@
     .backg {
         width: 100%;
     }
+    #navbtn{
+        display: flex;
+    }
+}
+#otsikko{
+    color: #1b7e7e;
+}
+#header{
+    margin: 20px;
 }
