@@ -50,12 +50,12 @@ const Addtask = () => {
 
      return (
         <>
-            <button type='button' className='navbtn' data-bs-toggle="modal" data-bs-target="#staticBackdrop"><Icon.PlusSquare size={30} /></button>
+            <button type='button' id='addbtn' data-bs-toggle="modal" data-bs-target="#staticBackdrop"><Icon.Plus size={40} /></button>
 
             <div className="modal fade" id="staticBackdrop"  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
                 <div className="modal-dialog">
-                    <div className="modal-content" style={{ background:"linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)" }}>
+                    <div className="modal-content" >
                         <div className="modal-header" style={{borderWidth:"3px"}}>
                             <h5 className="modal-title " id="staticBackdropLabel">Add New Task</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

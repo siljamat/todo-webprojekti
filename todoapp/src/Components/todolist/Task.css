@@ -15,14 +15,17 @@
   width: 55px;
   font-size: 1.2rem;
 }
-.fil
+.options
 {
-  display: grid;
-  justify-content: end;
-  width: 85%;
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-evenly;
 }
 .react-calendar {
   width: 100%;
   margin: 0 auto;
+}
+.listbtn{
+  background-color: #00A6A6;
+  color: white;
+  padding: 10px;
 }

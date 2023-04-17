@@ -54,12 +54,12 @@ const Task = () => {
 
     return (
         <>
-            <div className="fil">
+            <div className="options">
                 <DatePicker onChange={onChange} value={value} />
-                <button onClick={handleShowAll}>Show all todos for this month</button>
-                <button onClick={handleShowDay}>Show todos for selected day only</button>
+                <button className="listbtn" onClick={handleShowAll}>Show calendar</button>
+                <button className="listbtn" onClick={handleShowDay}>show todos of selected day</button>
+                <button className="listbtn">TÄÄ PITÄÄ TEHÄ: NÄYTÄ KAIKKI LISTANA</button>
             </div>
-
             <div className="kalenteri">
             {showAll ? (
                 <Calendar
@@ -88,7 +88,7 @@ const Task = () => {
                             <>
                                 <div className="catecont">
                                     <div className="cateRow">
-                                        <div className="">
+                                        <div>
                                             <div className="time">
                                                 <p>
                                                     {d.getHours()}:{d.getMinutes()}
