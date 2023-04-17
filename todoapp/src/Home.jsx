@@ -17,21 +17,13 @@ const Home = () => {
     return (
         <>
             <div className='backg'>
-                {/* The navigation bar */}
-                <div className='navbar'>
+                <div id='header'>
                     {/* Button to navigate to categories */}
-                    <button type='button' className='navbtn' onClick={() => navigate("/categories")}>
+                    <button type='button' id='navbtn' onClick={() => navigate("/categories")}>
                         <Icon.List size={30}/>
                     </button>
-                    <h2>Schedule</h2>
-                    {/* Addtask component to add a new task */}
-                    <Addtask/>
+                    <h2 id={"otsikko"}>ToDo</h2>
                 </div>
-                {/* The clock display */}
-                <div className='clock'>
-                    <Date/>
-                </div>
-                {/* The list of tasks */}
                 <div>
                     <Task/>
                 </div>
@@ -39,6 +31,7 @@ const Home = () => {
             <div className='sidebar'>
                 <Sidebar />
             </div>
+            <Addtask/>
         </>
     );
 };
