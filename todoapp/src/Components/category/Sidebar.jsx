@@ -1,6 +1,4 @@
 import React from 'react';
-import * as Icon from 'react-bootstrap-icons';
-import * as con from 'react-icons/tb';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -37,46 +35,37 @@ const Sidebar = () => {
 
     return (
         <div className="sidebar-container">
-            <div className="sidebar-header">
-                <h2>Categories</h2>
-            </div>
-            <form onSubmit={addCategory}>
-                <input
-                    type="text"
-                    placeholder="Enter category name"
-                    className="add-category-input"
-                />
-                <button type="submit" className="add-category-button">
-                    <Icon.PlusSquare size={20} />
-                </button>
-            </form>
+            <div id="categories">
+                <h2>Categories:</h2>
             <div className="sidebar-categories">
                 {cateData.map((category) => (
                     <div key={category._id} className="sidebar-category">
-
                         <div className="category-details">
-                            <h3>{category.cateName.toUpperCase()}</h3>
-                            <p>
-                                <button
-                                    className="tasks"
-                                    onClick={() =>
-                                        navigate(`/Catetask/${category.cateName}`)
-                                    }
-                                >
-                                    View tasks
+                            <h5>{category.cateName.toUpperCase()}</h5>
+                            <div className="category-actions">
+                            <button id="tasks"
+                                    onClick={() => navigate(`/Catetask/${category.cateName}`)}>
+                                    show todos in the category
                                 </button>
-                            </p>
                         </div>
-                        <div className="category-actions">
                             <button
                                 className="category-delete-button"
-                                onClick={() => deleteCategory(category._id)}
-                            >
-                                <Icon.Trash size={20} />
-                            </button>
+                                onClick={() => deleteCategory(category._id)}>Delete</button>
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className={"addCate"}>
+                <h5 id="newCate">Add a new category</h5>
+                <form onSubmit={addCategory}>
+                    <input
+                        type="text"
+                        placeholder="Enter category name"
+                        className="add-category-input"
+                    />
+                    <button type="submit" className="add-category-button">Add</button>
+                </form>
+            </div>
             </div>
         </div>
     );
