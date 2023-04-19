@@ -6,6 +6,7 @@ import axios from "axios";
 import DatePicker from "react-date-picker";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import {Nav, Navbar, Container} from 'react-bootstrap';
 
 const Task = () => {
     const [todolist, setTodolist] = useState([]);
@@ -53,13 +54,26 @@ const Task = () => {
     };
 
     return (
-        <>
-            <div className="options">
-                <DatePicker onChange={onChange} value={value} />
-                <button className="listbtn" onClick={handleShowAll}>Show calendar</button>
-                <button className="listbtn" onClick={handleShowDay}>show todos of selected day</button>
-                <button className="listbtn">TÄÄ PITÄÄ TEHÄ: NÄYTÄ KAIKKI LISTANA</button>
-            </div>
+            <>
+                <Navbar bg="light" expand="md">
+                    <Container>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="me-auto button-group">
+                                <DatePicker  onChange={onChange} value={value} />
+                                <button className="text-nowrap" onClick={handleShowAll}>
+                                    Show calendar
+                                </button>
+                                <button className="text-nowrap" onClick={handleShowDay}>
+                                    show todos of selected day
+                                </button>
+                                <button className="text-nowrap">
+                                    TÄÄ PITÄÄ TEHÄ: NÄYTÄ KAIKKI LISTANA
+                                </button>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
             <div className="kalenteri">
             {showAll ? (
                 <Calendar
