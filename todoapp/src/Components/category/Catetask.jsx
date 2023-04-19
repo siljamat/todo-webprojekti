@@ -3,6 +3,11 @@ import { useState , useEffect } from 'react';
 import { useParams , useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import './Catetask.css'
+import './Sidebar.css'
+import Sidebar from "./Sidebar";
+import {Button, Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
+import Addtask from "../todolist/Addtask";
+import Editcategories from "./Editcategories";
 
 const Catetask = () => {
 
@@ -26,42 +31,67 @@ const Catetask = () => {
 
     // Filter the task list data by category name using the filter() method
     let cateFil = todolist.filter( (row) => {
-        if(row.category.toLowerCase() === cateName){
+        console.log(todolist)
+        if(row.category === cateName.toUpperCase()){
             return(row)
         }
     })
 
-    console.log(cateFil);
+    const [show, setShow] = useState(false);
+    const closeSidebar = () => setShow(false);
+    const showSidebar = () => setShow(true);
 
     return (
         <>
             <div className="bg">
-                <h2>Task's</h2>
+                <h2>ToDos in {cateName}</h2>
+                <Button id="sidebtn" variant="light" onClick={showSidebar}>
+                    Categories
+                </Button>
+                <div id="navbar">
+                <Navbar id="nav" bg="light" expand="md">
+                    <Container>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="me-auto button-group">
+                                <button className="text-nowrap" onClick={() => navigate('/Home')}>
+                                    Back to main screen
+                                </button>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
+                    <div className="cont">
+                        {
+                            cateFil.map( (row ) => {
+                                let newdate = row.date
+                                let d = new Date(newdate)
 
-            <div className="cont">
-            {
-                cateFil.map( (row ) => {
+                                let da= d.toLocaleDateString()
 
-                    let newdate = row.date
-                    let d = new Date(newdate)
-
-                    let da= d.toLocaleDateString()
-                    
-                    
-
-                    return(
-
-                        <>
-                                <p>{da}</p>
-                                <p>{row.taskName.toUpperCase()}</p>
-                        </>
-
-                        )
-                })
-            }
-            <button onClick={() => navigate("/categories")}>Back</button>
+                                return(
+                                    <>
+                                        <p>{da}</p>
+                                        <p>{row.taskName.toUpperCase()}</p>
+                                        <p>Lisätään tähä edit button, editoidaan siis ite taskii</p>
+                                    </>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
             </div>
-        </div>
+                <div className='sidebar'>
+                    <Sidebar />
+                </div>
+                <Offcanvas show={show} onHide={closeSidebar}>
+                    <Offcanvas.Header className="position-absolute top-0 end-0" closeButton>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        <Sidebar />
+                    </Offcanvas.Body>
+                </Offcanvas>
+                <Addtask/>
         </>
     );
 };

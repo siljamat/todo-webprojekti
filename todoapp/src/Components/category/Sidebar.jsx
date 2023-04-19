@@ -6,6 +6,7 @@ import './Sidebar.css';
 import Editcategories from "./Editcategories";
 import { Button} from 'react-bootstrap';
 
+
 const Sidebar = () => {
     const navigate = useNavigate();
     const [cateData, setCateData] = useState([]);
@@ -16,6 +17,7 @@ const Sidebar = () => {
             .then(async (res) => {
                 const rawcateData = await res.data;
                 setCateData(rawcateData);
+                console.log(rawcateData)
             })
             .catch((err) => console.log(err));
     }, []);
@@ -24,25 +26,25 @@ const Sidebar = () => {
         e.preventDefault();
         const dataObj = { cateName: e.target[0].value };
         axios.post('http://localhost:2000/category', dataObj);
-        alert('Category added successfully');
+        alert('Catetask added successfully');
         window.location.reload();
     };
 
     const deleteCategory = async (_id) => {
         await axios.delete(`http://localhost:2000/category/${_id}`);
-        alert('Category deleted successfully');
+        alert('Catetask deleted successfully');
         window.location.reload();
     };
 
     return (
         <div className="sidebar-container">
             <div id="categories">
-                <h2>Categories:</h2>
+                <h3>Categories:</h3>
             <div className="sidebar-categories">
                 {cateData.map((category) => (
                     <div key={category._id} className="sidebar-category">
                         <div className="category-details">
-                            <h5>{category.cateName.toUpperCase()}</h5>
+                            <p>{category.cateName.toUpperCase()}</p>
                             <div className="category-actions">
                             <Button id="tasks" variant="light"
                                     onClick={() => navigate(`/Catetask/${category.cateName}`)}>

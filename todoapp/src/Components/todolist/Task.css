@@ -16,6 +16,7 @@
   font-size: 1.2rem;
 }
 .options
+
 {
   display: flex;
   justify-content: space-evenly;
@@ -29,4 +30,10 @@
   padding-right: 10px;
   margin-right: 10px;
   border-radius: 0px;
+}
+.button-group button{
+  background-color: #f6f7f9;
+}
+.button-group button:hover{
+  background-color: #eeeeee;
 }

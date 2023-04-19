@@ -25,7 +25,7 @@ const Addcategories = () => {
         axios.post("http://localhost:2000/category", dataObj)
 
         // Display a success message to the user and refresh the page
-        alert("Category Added Succesfully");
+        alert("Catetask Added Succesfully");
         window.location.reload()
 
     }
@@ -38,7 +38,7 @@ const Addcategories = () => {
                 <div className="modal-dialog" >
                     <div className="modal-content" style={{ background:"linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)" }}>
                         <div className="modal-header" style={{borderWidth:"3px"}}>
-                            <h5 className="modal-title " id="staticBackdropLabel">Add New Category</h5>
+                            <h5 className="modal-title " id="staticBackdropLabel">Add New Catetask</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
@@ -47,7 +47,7 @@ const Addcategories = () => {
                             <div className="modal-body">
                                 <div className="row g-3">
                                     <div className="col">
-                                        <input type="text" className="form-control" placeholder="Enter Category Name" onChange={e => setcateName(e.target.value)} value={cateName}/>
+                                        <input type="text" className="form-control" placeholder="Enter Catetask Name" onChange={e => setcateName(e.target.value)} value={cateName}/>
                                     </div>
                                 </div>
                             </div>

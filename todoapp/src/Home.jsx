@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as Icon from 'react-bootstrap-icons'
 import Addtask from './Components/todolist/Addtask'
 import Task from './Components/todolist/Task';
 import Date from './Components/Date';

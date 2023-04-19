@@ -29,7 +29,7 @@ const Categories = () => {
     const deleteHandler = async(_id) => { // Function to handle category deletion on clicking delete button
         await axios.delete(`http://localhost:2000/category/${_id}`);
 
-        alert("Category Deleted Successfully");
+        alert("Catetask Deleted Successfully");
 
         window.location.reload(); // Reloading the page after category deletion
     }

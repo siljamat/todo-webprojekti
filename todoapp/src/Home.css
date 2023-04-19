@@ -23,6 +23,12 @@
     margin: 15px;
     display: none;
 }
+#otsikko{
+    color: #1b7e7e;
+}
+#header{
+    margin: 20px;
+}
 
 @media screen and (max-width: 1150px) {
     .sidebar {
@@ -37,10 +43,4 @@
     .backg {
         width: 100%;
     }
-}
-#otsikko{
-    color: #1b7e7e;
-}
-#header{
-    margin: 20px;
 }

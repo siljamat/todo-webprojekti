@@ -49,7 +49,7 @@ const Editcategories = () => {
         axios.put(`http://localhost:2000/category/${_id}`, dataObj)
 
         // Display a success message using the `alert` function.
-        alert("Category Updated")
+        alert("Catetask Updated")
 
         // Navigate to the categories page.
         navigate("/categories")
@@ -61,12 +61,12 @@ const Editcategories = () => {
         <>
 
         <div className='bg'>
-            <h2>Update Category</h2>
+            <h2>Update Catetask</h2>
 
                 <div className="cont" >
                     <form onSubmit={updateCategory}>
                         <div className="inp">
-                            <input type="text" placeholder="Enter Category Name" onChange={e => setcateName(e.target.value)} value={cateName}/>
+                            <input type="text" placeholder="Enter Catetask Name" onChange={e => setcateName(e.target.value)} value={cateName}/>
                         </div>
 
                         <div className="">
