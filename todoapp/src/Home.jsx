@@ -6,11 +6,16 @@ import Task from './Components/todolist/Task';
 import Date from './Components/Date';
 import './Home.css'
 import Sidebar from './Components/category/Sidebar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Container, Offcanvas } from 'react-bootstrap';
+import {useState} from 'react'
 
 
 const Home = () => {
-
     const navigate = useNavigate()
+    const [show, setShow] = useState(false);
+    const closeSidebar = () => setShow(false);
+    const showSidebar = () => setShow(true);
 
     // Render the Home component, which includes a navigation bar,
     // a clock display and a list of tasks
@@ -18,10 +23,9 @@ const Home = () => {
         <>
             <div className='backg'>
                 <div id='header'>
-                    {/* Button to navigate to categories */}
-                    <button type='button' id='navbtn' onClick={() => navigate("/categories")}>
-                        <Icon.List size={30}/>
-                    </button>
+                    <Button id="sidebtn" variant="light" onClick={showSidebar}>
+                        Categories
+                    </Button>
                     <h2 id={"otsikko"}>ToDo</h2>
                 </div>
                 <div>
@@ -31,6 +35,13 @@ const Home = () => {
             <div className='sidebar'>
                 <Sidebar />
             </div>
+                <Offcanvas show={show} onHide={closeSidebar}>
+                    <Offcanvas.Header className="position-absolute top-0 end-0" closeButton>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        <Sidebar />
+                    </Offcanvas.Body>
+                </Offcanvas>
             <Addtask/>
         </>
     );

@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext');
+
+*{
+    font-family: 'Anuphan', sans-serif;
+}
 .backg{
     background-color: white;
     height: 100vh;
@@ -14,17 +19,23 @@
 #navbtn{
     display: none;
 }
+#sidebtn{
+    margin: 15px;
+    display: none;
+}
 
-
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1150px) {
     .sidebar {
         display: none;
     }
+    #sidebtn{
+        display: inline-block;
+        position: fixed;
+        top: 5px;
+        left: 5px;
+    }
     .backg {
         width: 100%;
-    }
-    #navbtn{
-        display: flex;
     }
 }
 #otsikko{
