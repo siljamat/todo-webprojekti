@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
 import Editcategories from "./Editcategories";
+import { Button} from 'react-bootstrap';
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -43,14 +44,14 @@ const Sidebar = () => {
                         <div className="category-details">
                             <h5>{category.cateName.toUpperCase()}</h5>
                             <div className="category-actions">
-                            <button id="tasks"
+                            <Button id="tasks" variant="light"
                                     onClick={() => navigate(`/Catetask/${category.cateName}`)}>
                                     show todos in the category
-                                </button>
+                                </Button>
                         </div>
-                            <button
-                                className="category-delete-button"
-                                onClick={() => deleteCategory(category._id)}>Delete</button>
+                            <Button
+                                className="category-delete-button" variant="light"
+                                onClick={() => deleteCategory(category._id)}>Delete</Button>
                         </div>
                     </div>
                 ))}
@@ -63,7 +64,7 @@ const Sidebar = () => {
                         placeholder="Enter category name"
                         className="add-category-input"
                     />
-                    <button type="submit" className="add-category-button">Add</button>
+                    <Button type="submit" className="add-category-button  btn-sm" variant="secondary">Add</Button>
                 </form>
             </div>
             </div>

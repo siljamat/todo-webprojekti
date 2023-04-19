@@ -23,7 +23,7 @@ h2{
 
 .catecont{
     width: 70%;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .cateRow{
@@ -31,8 +31,8 @@ h2{
     grid-template-columns:0.3fr 3fr 0.2fr;
     justify-content: center;
     align-items: center;
-    background: #E0C3FC;
-    box-shadow: 0px 0px 3px 0px rgb(12, 12, 12);
+    background: #f6f7f9;
+    box-shadow: 0px 0px 3px 0px rgb(116, 116, 117);
     border-radius: 7px;
     margin-bottom: 10px;
     padding: 15px 7px;
