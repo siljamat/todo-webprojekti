@@ -12,6 +12,7 @@ const Task = () => {
     const [todolist, setTodolist] = useState([]);
     const [value, onChange] = useState(new Date());
     const [showAll, setShowAll] = useState(false);
+    const [showList, setShowList] = useState(false); // uusi tila kaikille tehtäville
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -47,106 +48,171 @@ const Task = () => {
 
     const handleShowAll = () => {
         setShowAll(true);
+        setShowList(false); // piilotetaan lista, jos se on avoinna
     };
 
     const handleShowDay = () => {
         setShowAll(false);
+        setShowList(false); // piilotetaan lista, jos se on avoinna
+    };
+
+    const handleShowList = () => {
+        setShowList(true);
+        setShowAll(false); // piilotetaan kalenteri, jos se on avoinna
     };
 
     return (
-            <>
-                <Navbar bg="light" expand="md">
-                    <Container>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="me-auto button-group">
-                                <DatePicker  onChange={onChange} value={value} />
-                                <button className="text-nowrap" onClick={handleShowAll}>
-                                    Show calendar
-                                </button>
-                                <button className="text-nowrap" onClick={handleShowDay}>
-                                    show todos of selected day
-                                </button>
-                                <button className="text-nowrap">
-                                    TÄÄ PITÄÄ TEHÄ: NÄYTÄ KAIKKI LISTANA
-                                </button>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
+        <>
+            <Navbar bg="light" expand="md">
+                <Container>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto button-group">
+                            <DatePicker onChange={onChange} value={value} />
+                            <button className="text-nowrap" onClick={handleShowAll}>
+                                Show calendar
+                            </button>
+                            <button className="text-nowrap" onClick={handleShowDay}>
+                                Show todos of selected day
+                            </button>
+                            <button className="text-nowrap" onClick={handleShowList}>
+                                Show all as a list
+                            </button>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
             <div className="kalenteri">
-            {showAll ? (
-                <Calendar
-                    value={value}
-                    onChange={onChange}
-                    tileContent={({ activeStartDate, date, view }) => {
-                        const dateString = date.toLocaleDateString();
+                {showAll ? (
+                    //Kalenterinäkymä
+                    <Calendar
+                        value={value}
+                        onChange={onChange}
+                        tileContent={({ activeStartDate, date, view }) => {
+                            const dateString = date.toLocaleDateString();
 
-                        const todoForDate = todolist.find((todo) => {
-                            const todoDate = new Date(todo.date).toLocaleDateString();
-                            return todoDate === dateString;
-                        });
+                            const todoForDate = todolist.find((todo) => {
+                                const todoDate = new Date(todo.date).toLocaleDateString();
+                                return todoDate === dateString;
+                            });
 
-                        if (todoForDate) {
-                            return <p>{todoForDate.taskName}</p>;
-                        }
-                    }}
-                />
-            ) : (
-                <div>
-                    {filterlist.map((row) => {
-                        const newdate = row.date;
-                        const d = new Date(newdate);
+                            if (todoForDate) {
+                                return <p>{todoForDate.taskName}</p>;
+                            }
+                        }}
+                    />
+                ) : showList ? (
+                    // Näytetään kaikki tehtävät listana
+                    <div>
+                        {todolist.map((row) => {
+                            const newdate = row.date;
+                            const d = new Date(newdate);
 
-                        return (
-                            <>
-                                <div className="catecont">
-                                    <div className="cateRow">
-                                        <div>
-                                            <div className="time">
-                                                <p>
-                                                    {d.getHours()}:{d.getMinutes()}
-                                                </p>
+                            return (
+                                <>
+                                    <div className="catecont">
+                                        <div className="cateRow">
+                                            <div>
+                                                <div className="time">
+                                                    <p>
+                                                        {d.getHours()}:{d.getMinutes()}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="nme">
+                                                <h3>{row.taskName.toUpperCase()}</h3>
+                                                <p>{row.category}</p>
+                                            </div>
+
+                                            <div className="dropdown">
+                                                <button
+                                                    class="btn"
+                                                    type="button"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                >
+                                                    <Icon.ThreeDotsVertical />
+                                                </button>
+                                                <ul
+                                                    class="dropdown-menu"
+                                                    aria-labelledby="dropdownMenuButton1"
+                                                >
+                                                    <li>
+                                                        <button
+                                                            type="button"
+                                                            className="navbtn dropdown-item "
+                                                            onClick={() => deleteHandler(row._id)}
+                                                        >
+                                                            <Icon.XLg />
+                                                            Delete
+                                                        </button>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
+                                    </div>
+                                </>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    //Näytetään kaikki tehtävät yksitellen
+                    <div>
+                        {filterlist.map((row) => {
+                            const newdate = row.date;
+                            const d = new Date(newdate);
 
-                                        <div className="nme">
-                                            <h3>{row.taskName.toUpperCase()}</h3>
-                                            <p>{row.category}</p>
-                                        </div>
+                            return (
+                                <>
+                                    <div className="catecont">
+                                        <div className="cateRow">
+                                            <div>
+                                                <div className="time">
+                                                    <p>
+                                                        {d.getHours()}:{d.getMinutes()}
+                                                    </p>
+                                                </div>
+                                            </div>
 
-                                        <div class="dropdown">
-                                            <button
-                                                class="btn"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                <Icon.ThreeDotsVertical />
-                                            </button>
-                                            <ul
-                                                class="dropdown-menu"
-                                                aria-labelledby="dropdownMenuButton1"
-                                            >
-                                                <li>
-                                                    <button
-                                                        type="button"
-                                                        className="navbtn dropdown-item "
-                                                        onClick={() => deleteHandler(row._id)}
-                                                    >
-                                                        <Icon.XLg />
-                                                        Delete
-                                                    </button>
-                                                </li>
-                                            </ul>
+                                            <div className="nme">
+                                                <h3>{row.taskName.toUpperCase()}</h3>
+                                                <p>{row.category}</p>
+                                            </div>
+
+                                            <div className="dropdown">
+                                                <button
+                                                    class="btn"
+                                                    type="button"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                >
+                                                    <Icon.ThreeDotsVertical />
+                                                </button>
+                                                <ul
+                                                    class="dropdown-menu"
+                                                    aria-labelledby="dropdownMenuButton1"
+                                                >
+                                                    <li>
+                                                        <button
+                                                            type="button"
+                                                            className="navbtn dropdown-item "
+                                                            onClick={() => deleteHandler(row._id)}
+                                                        >
+                                                            <Icon.XLg />
+                                                            Delete
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </>
-                        );
-                    })}
-                </div>
-            )} </div>
+                                </>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
         </>
     )};
-    export default Task;
+export default Task;
