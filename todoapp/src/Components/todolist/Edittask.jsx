@@ -4,6 +4,10 @@ import './Addtask.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { useNavigate , useParams } from 'react-router-dom'
+import {Button, Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
+import Sidebar from "../category/Sidebar";
+import Addtask from "./Addtask";
+import './editTodo.css'
 
 const Edittask = () => {
 
@@ -52,17 +56,40 @@ const Edittask = () => {
         navigate("/")
     }
 
+    const [show, setShow] = useState(false);
+    const closeSidebar = () => setShow(false);
+    const showSidebar = () => setShow(true);
+
     // Render the component
     return (
         <>
             <div className='bg'>
-                <h2>Update Task</h2>
+                <h2>Edit {taskName}</h2>
+                <Button id="sidebtn" variant="light" onClick={showSidebar}>
+                    Categories
+                </Button>
+                <div id="navbar">
+                    <Navbar id="nav" bg="light" expand="md">
+                        <Container>
+                            <Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
+                            <Navbar.Collapse id="basic-navbar-nav">
+                                <Nav className="me-auto button-group">
+                                    <button className="text-nowrap" onClick={() => navigate('/Home')}>
+                                        Back to main screen
+                                    </button>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Container>
+                    </Navbar>
                 <div className='cont'>
                     <form onSubmit={updateHandler}>
-                        <div className="inp">
-                            <input type="text" placeholder="Enter Task Name" onChange={e => settaskName(e.target.value)} value={taskName} />
-                        </div>
-                        <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={e => setcategory(e.target.value)} value={category}>
+                        <div className="row g-3">
+                            <div className="col">
+                                <p>Add the updated name and/or category below</p>
+                            <input type="text" className="form-control" placeholder={taskName} onChange={e => settaskName(e.target.value)} value={taskName} />
+                            </div>
+                            </div>
+                        <select className="form-select form-select-sm mt-2" aria-label=".form-select-sm example" onChange={e => setcategory(e.target.value)} value={category}>
                             <option defaultValue>Select Category</option>
                             {
                                 cateData.map(row => { return (<option>{row.cateName}</option>) })
@@ -75,6 +102,18 @@ const Edittask = () => {
                     </form>
                 </div>
             </div>
+            </div>
+                <div className='sidebar'>
+                    <Sidebar />
+                </div>
+                <Offcanvas show={show} onHide={closeSidebar}>
+                    <Offcanvas.Header className="position-absolute top-0 end-0" closeButton>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        <Sidebar />
+                    </Offcanvas.Body>
+                </Offcanvas>
+                <Addtask/>
         </>
     );
 };

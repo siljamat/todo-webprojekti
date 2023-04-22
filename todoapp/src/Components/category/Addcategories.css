@@ -1,49 +1,43 @@
-
-.container{
-    display: grid;
-    justify-content: center;
-    align-items: center;
-
+.dotBlue{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: deepskyblue;
 }
-
-.addform{
-    display: grid;
-    justify-content: center;
-    align-items: center;
+.dotOrange{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: orange;
 }
-.addbtn{
-    margin-top: 4px;
+.dotYellow{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: yellow;
+}
+.dotPink{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: pink;
+}
+.dotGreen{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: green;
+}
+.catebtns{
+    margin: 5px 0;
     display: flex;
-    gap: 10px;
-    align-items: center;
+    justify-content: space-between;
 }
-.addbtn input{
-    border: none;
-    width: 80px;
-    height: 30px;
-    border-radius: 7px;
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-}
-.catname input{
-    height: 30px;
-    border-radius: 5px;
-    outline: none;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 600;
-
-}
-.cbtn{
-    height: 30px;
-    width: 80px;
-    border-radius: 5px;
-    border: none;
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 700;
-    cursor: pointer;
-
+form{
+    margin: 20px;
 }

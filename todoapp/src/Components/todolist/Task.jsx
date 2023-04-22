@@ -7,13 +7,17 @@ import DatePicker from "react-date-picker";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import {Nav, Navbar, Container} from 'react-bootstrap';
+import edittask from "./Edittask";
 
 const Task = () => {
     const [todolist, setTodolist] = useState([]);
     const [value, onChange] = useState(new Date());
     const [showAll, setShowAll] = useState(false);
     const [showList, setShowList] = useState(false); // uusi tila kaikille tehtäville
+
     const navigate = useNavigate();
+
+
 
     useEffect(() => {
         axios
@@ -68,12 +72,12 @@ const Task = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto button-group">
-                            <DatePicker onChange={onChange} value={value} />
                             <button className="text-nowrap" onClick={handleShowAll}>
-                                Show calendar
+                                Calendar
                             </button>
-                            <button className="text-nowrap" onClick={handleShowDay}>
-                                Show todos of selected day
+                            <button
+                                className="text-nowrap" onClick={handleShowDay}>
+                                <DatePicker onChange={onChange} value={value} />
                             </button>
                             <button className="text-nowrap" onClick={handleShowList}>
                                 Show all as a list
@@ -97,7 +101,11 @@ const Task = () => {
                             });
 
                             if (todoForDate) {
-                                return <p>{todoForDate.taskName}</p>;
+                               return (
+                                   <button onClick={() => handleShowDay()}>
+                                    <p>{todoForDate.taskName}</p>
+                                </button>
+                               )
                             }
                         }}
                     />
@@ -115,7 +123,7 @@ const Task = () => {
                                             <div>
                                                 <div className="time">
                                                     <p>
-                                                        {d.getHours()}:{d.getMinutes()}
+                                                        {d.getDay()}.{d.getMonth()}.{d.getFullYear()} <br/> {d.getHours()}:{d.getMinutes()}
                                                     </p>
                                                 </div>
                                             </div>
@@ -138,6 +146,12 @@ const Task = () => {
                                                     class="dropdown-menu"
                                                     aria-labelledby="dropdownMenuButton1"
                                                 >
+                                                    <li>
+                                                        <button type='button' className='navbtn dropdown-item ' onClick={() => navigate(`/edittask/${row._id}`)}>
+                                                        <Icon.PencilSquare/>
+                                                        Edit
+                                                        </button>
+                                                    </li>
                                                     <li>
                                                         <button
                                                             type="button"
@@ -162,7 +176,6 @@ const Task = () => {
                         {filterlist.map((row) => {
                             const newdate = row.date;
                             const d = new Date(newdate);
-
                             return (
                                 <>
                                     <div className="catecont">
@@ -193,6 +206,13 @@ const Task = () => {
                                                     class="dropdown-menu"
                                                     aria-labelledby="dropdownMenuButton1"
                                                 >
+
+                                                    <li>
+                                                        <button type='button' className='navbtn dropdown-item ' onClick={() => navigate(`/edittask/${row._id}`)}>
+                                                            <Icon.PencilSquare/>
+                                                            Edit
+                                                        </button>
+                                                    </li>
                                                     <li>
                                                         <button
                                                             type="button"

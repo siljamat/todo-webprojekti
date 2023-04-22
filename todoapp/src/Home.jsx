@@ -8,6 +8,7 @@ import Sidebar from './Components/category/Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Container, Offcanvas } from 'react-bootstrap';
 import {useState} from 'react'
+import Addcategories from "./Components/category/Addcategories";
 
 
 const Home = () => {
@@ -27,9 +28,7 @@ const Home = () => {
                     </Button>
                     <h2 id={"otsikko"}>ToDo</h2>
                 </div>
-                <div>
                     <Task/>
-                </div>
             </div>
             <div className='sidebar'>
                 <Sidebar />

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
 import Editcategories from "./Editcategories";
 import { Button} from 'react-bootstrap';
+import Addcategories from "./Addcategories";
+import Highlighter from "react-highlight-words";
 
 
 const Sidebar = () => {
@@ -26,13 +28,13 @@ const Sidebar = () => {
         e.preventDefault();
         const dataObj = { cateName: e.target[0].value };
         axios.post('http://localhost:2000/category', dataObj);
-        alert('Catetask added successfully');
+        alert('Category added successfully');
         window.location.reload();
     };
 
     const deleteCategory = async (_id) => {
         await axios.delete(`http://localhost:2000/category/${_id}`);
-        alert('Catetask deleted successfully');
+        alert('Category deleted successfully');
         window.location.reload();
     };
 
@@ -44,30 +46,29 @@ const Sidebar = () => {
                 {cateData.map((category) => (
                     <div key={category._id} className="sidebar-category">
                         <div className="category-details">
-                            <p>{category.cateName.toUpperCase()}</p>
+                            <p className="cateHeader" style={{backgroundColor: category.cateColor}}>{category.cateName.toUpperCase()}</p>
                             <div className="category-actions">
                             <Button id="tasks" variant="light"
                                     onClick={() => navigate(`/Catetask/${category.cateName}`)}>
-                                    show todos in the category
+                                    show todos
                                 </Button>
-                        </div>
+                                <Button
+                                    className="category-delete-button" variant="light"
+                                    onClick={() => navigate(`/editcategories/${category._id}`)}>
+                                    edit
+                                </Button>
                             <Button
                                 className="category-delete-button" variant="light"
-                                onClick={() => deleteCategory(category._id)}>Delete</Button>
+                                onClick={() => deleteCategory(category._id)}>Delete
+                            </Button>
+                            </div>
                         </div>
                     </div>
                 ))}
             </div>
             <div className={"addCate"}>
                 <h5 id="newCate">Add a new category</h5>
-                <form onSubmit={addCategory}>
-                    <input
-                        type="text"
-                        placeholder="Enter category name"
-                        className="add-category-input"
-                    />
-                    <Button type="submit" className="add-category-button  btn-sm" variant="secondary">Add</Button>
-                </form>
+                <Addcategories></Addcategories>
             </div>
             </div>
         </div>

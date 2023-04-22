@@ -34,7 +34,7 @@ const Addtask = () => {
         const dataObj = {
             taskName,
             date: tDate,
-            category
+            category,
         }
 
         console.log(dataObj);

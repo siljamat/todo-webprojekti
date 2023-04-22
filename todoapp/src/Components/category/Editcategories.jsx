@@ -3,6 +3,9 @@ import React from 'react';
 import { useState , useEffect } from 'react';
 import { useParams , useNavigate} from 'react-router-dom';
 import './Editcategories.css';
+import {Button, Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
+import Sidebar from "./Sidebar";
+import Addtask from "../todolist/Addtask";
 
 
 const Editcategories = () => {
@@ -52,17 +55,36 @@ const Editcategories = () => {
         alert("Catetask Updated")
 
         // Navigate to the categories page.
-        navigate("/categories")
+        navigate("/")
     }
 
+    const [show, setShow] = useState(false);
+    const closeSidebar = () => setShow(false);
+    const showSidebar = () => setShow(true);
 
 
     return (
         <>
 
         <div className='bg'>
-            <h2>Update Catetask</h2>
-
+            <h2>Edit {cateName}</h2>
+            <Button id="sidebtn" variant="light" onClick={showSidebar}>
+                Categories
+            </Button>
+            <div id="navbar">
+                <Navbar id="nav" bg="light" expand="md">
+                    <Container>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="me-auto button-group">
+                                <button className="text-nowrap" onClick={() => navigate('/Home')}>
+                                    Back to main screen
+                                </button>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
+            </div>
                 <div className="cont" >
                     <form onSubmit={updateCategory}>
                         <div className="inp">
@@ -71,11 +93,22 @@ const Editcategories = () => {
 
                         <div className="">
                             <button type="submit" className="btn btn-primary" >Update</button>
-                            <button type="button" className="btn btn-secondary" onClick={() => navigate(`/categories`)}>Cancel</button>
+                            <button type="button" className="btn btn-secondary" onClick={() => navigate(`/`)}>Cancel</button>
                         </div>
                     </form>
                 </div>
-        </div>      
+        </div>
+            <div className='sidebar'>
+                <Sidebar />
+            </div>
+            <Offcanvas show={show} onHide={closeSidebar}>
+                <Offcanvas.Header className="position-absolute top-0 end-0" closeButton>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    <Sidebar />
+                </Offcanvas.Body>
+            </Offcanvas>
+            <Addtask/>
    </>
     );
 };

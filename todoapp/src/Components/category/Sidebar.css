@@ -12,19 +12,20 @@
     text-align: left;
     background-color: #f6f7f9;
 }
-h2{
+h3{
     color: #1b7e7e;
 }
 
 .category-actions{
     display: inline-block;
+    margin: 0 5px;
 }
 .category-details{
-    color: #00A6A6;
+    background-color: #eeeeee;
+    color: black;
     padding: 15px;
     margin: 15px;
     border-radius: 7px;
-    background-color: #eeeeee;
     font-size: medium;
 }
 #newCate{
@@ -43,4 +44,13 @@ h2{
 .add-category-input{
     padding: 3px;
     margin-right: 5px;
+}
+.cateHeader{
+    text-align: center;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 5px;
+}
+#tasks{
+    margin: 5px;
 }

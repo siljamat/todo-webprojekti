@@ -7,6 +7,7 @@ import Addcategories from './Addcategories'; // Importing component for adding n
 import { useEffect } from 'react'; // Importing hook to use lifecycle methods
 import axios from 'axios'; // Importing axios for HTTP requests
 import { useState } from 'react'; // Importing hook to use state in functional component
+import Highlighter from "react-highlight-words";
 
 const Categories = () => {
 
@@ -55,7 +56,7 @@ const Categories = () => {
                                         <con.TbChartDonut3 size={50} /> {/* Adding chart icon */}
                                     </div>
                                     <div className='nme'>
-                                        <h3>{row.cateName.toUpperCase()}</h3>
+
                                         <p>
                                             <button className='tasks' onClick={() => navigate(`/Catetask/${row.cateName}`)}>View task's</button>
                                         </p>
