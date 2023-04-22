@@ -6,7 +6,7 @@ const mongoose = require("mongoose")
 const todoSchema = new mongoose.Schema({
     taskName:String,
     date:Date,
-    category:String
+    category:String,
 
 })
 
