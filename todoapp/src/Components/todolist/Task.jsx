@@ -14,10 +14,24 @@ const Task = () => {
     const [value, onChange] = useState(new Date());
     const [showAll, setShowAll] = useState(false);
     const [showList, setShowList] = useState(false); // uusi tila kaikille tehtäville
+    const [cateData, setcateData] = useState([]); // Initializing state for category data fetched from server
 
     const navigate = useNavigate();
 
 
+
+    useEffect(() => { // Using useEffect hook to fetch category data from server on initial load
+
+        axios.get("http://localhost:2000/category")
+            .then(async (res) => {
+
+                const rawcateData = await res.data;
+
+                setcateData(rawcateData);
+
+            }).catch( (err) => console.log(err))
+
+    },[]);
 
     useEffect(() => {
         axios
@@ -115,7 +129,12 @@ const Task = () => {
                         {todolist.map((row) => {
                             const newdate = row.date;
                             const d = new Date(newdate);
-
+                            let cateColor;
+                            const category = cateData.find((cate) => cate.cateName === row.category);
+                            if (category) {
+                                cateColor = category.cateColor;
+                                console.log(cateColor)
+                            }
                             return (
                                 <>
                                     <div className="catecont">
@@ -130,12 +149,12 @@ const Task = () => {
 
                                             <div className="nme">
                                                 <h3>{row.taskName.toUpperCase()}</h3>
-                                                <p>{row.category}</p>
+                                                <p className="category" style={{backgroundColor: cateColor}}>{row.category}</p>
                                             </div>
 
                                             <div className="dropdown">
                                                 <button
-                                                    class="btn"
+                                                    className="btn"
                                                     type="button"
                                                     data-bs-toggle="dropdown"
                                                     aria-expanded="false"

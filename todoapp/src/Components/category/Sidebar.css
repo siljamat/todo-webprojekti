@@ -8,28 +8,29 @@
     top: 0;
     left: 0;
     overflow-x: hidden;
-    padding-top: 80px;
+    padding-top: 20px;
     text-align: left;
     background-color: #f6f7f9;
 }
-h3{
-    color: #1b7e7e;
+h3 {
+    color: black;
+    text-align: center;
 }
 
 .category-actions{
-    display: inline-block;
-    margin: 0 5px;
+    display: flex;
+    justify-content: space-between;
 }
 .category-details{
     background-color: #eeeeee;
     color: black;
-    padding: 15px;
-    margin: 15px;
+    padding: 10px;
+    margin: 10px;
     border-radius: 7px;
     font-size: medium;
 }
 #newCate{
-    color: #00A6A6;
+    color: black;
 }
 .sidebar .closebtn {
     position: absolute;
@@ -39,7 +40,7 @@ h3{
     margin-left: 50px;
 }
 .addCate{
-    margin-left: 20px;
+    text-align: center;
 }
 .add-category-input{
     padding: 3px;
@@ -49,8 +50,5 @@ h3{
     text-align: center;
     border-radius: 5px;
     padding: 4px;
-    margin: 5px;
-}
-#tasks{
     margin: 5px;
 }

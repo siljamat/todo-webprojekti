@@ -4,10 +4,11 @@ import './Addtask.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { useNavigate , useParams } from 'react-router-dom'
-import {Button, Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
+import {Button, Container, DropdownButton, Nav, Navbar, Offcanvas} from "react-bootstrap";
 import Sidebar from "../category/Sidebar";
 import Addtask from "./Addtask";
 import './editTodo.css'
+import DropdownItem from "react-bootstrap/DropdownItem";
 
 const Edittask = () => {
 
@@ -27,6 +28,7 @@ const Edittask = () => {
                 const rawtodolistData = await res.data[0];
                 settodolistData(rawtodolistData);
                 settaskName(rawtodolistData.taskName);
+                setcategory(rawtodolistData.category)
             }).catch((err) => console.log(err))
     }, [_id])
 
@@ -43,6 +45,8 @@ const Edittask = () => {
             }).catch((err) => console.log(err))
     }, [])
 
+    console.log(cateData)
+
     // Handler function for updating the data
     const updateHandler = (e) => {
         e.preventDefault()
@@ -52,7 +56,7 @@ const Edittask = () => {
         }
         console.log(dataObj);
         axios.put(`http://localhost:2000/todolist/${_id}`, dataObj)
-        alert("Update Task Successfully");
+        alert("ToDo updated successfully");
         navigate("/")
     }
 
@@ -89,15 +93,31 @@ const Edittask = () => {
                             <input type="text" className="form-control" placeholder={taskName} onChange={e => settaskName(e.target.value)} value={taskName} />
                             </div>
                             </div>
-                        <select className="form-select form-select-sm mt-2" aria-label=".form-select-sm example" onChange={e => setcategory(e.target.value)} value={category}>
-                            <option defaultValue>Select Category</option>
+                        <div className="btns">
+                        <DropdownButton className="catebtn" variant="light" title="Choose category">
                             {
-                                cateData.map(row => { return (<option>{row.cateName}</option>) })
+                                cateData.map(row => {
+                                    return(
+                                        <DropdownItem onClick={e => setcategory(row.cateName)} value={category}>{row.cateName}
+                                        <span style={{backgroundColor: row.cateColor}} className="circle"></span>
+                                        </DropdownItem>
+                                    )
+                                })
                             }
-                        </select>
-                        <div className="btn">
-                            <button type="submit" className="btn btn-primary">Update</button>
-                            <button type="button" className="btn btn-secondary" onClick={() => navigate("/")}>Close</button>
+                        </DropdownButton>
+
+{/*                        <select className="form-select form-select-sm mt-2" aria-label=".form-select-sm example" onChange={e => setcategory(e.target.value)} value={category}>
+                            <option defaultValue>original: {category}</option>
+                            {
+                                cateData.map(row => {
+                                    return (
+                                        <option className="selectCate">{row.cateName}</option>
+                                    )
+                                })
+                            }
+                        </select>*/}
+                            <button type="submit" className="btn btn-light m-1">Update</button>
+                            <button type="button" className="btn btn-light" onClick={() => navigate("/")}>cancel</button>
                         </div>
                     </form>
                 </div>

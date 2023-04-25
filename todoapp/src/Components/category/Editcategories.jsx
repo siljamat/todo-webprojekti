@@ -3,9 +3,10 @@ import React from 'react';
 import { useState , useEffect } from 'react';
 import { useParams , useNavigate} from 'react-router-dom';
 import './Editcategories.css';
-import {Button, Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
+import {Button, Container, DropdownButton, Nav, Navbar, Offcanvas} from "react-bootstrap";
 import Sidebar from "./Sidebar";
 import Addtask from "../todolist/Addtask";
+import Dropdown from "react-bootstrap/Dropdown";
 
 
 const Editcategories = () => {
@@ -18,6 +19,7 @@ const Editcategories = () => {
 
     // Use the `useState` hook to manage the `cateName` state.
     const [cateName, setcateName] = useState("")
+    const [cateColor, setcateColor] = useState("")
 
     // Use the `useEffect` hook to fetch the category data from the API.
     useEffect(() => {
@@ -31,6 +33,7 @@ const Editcategories = () => {
 
                 // Update the `cateName` state with the `cateName` property of `rawcateData`.
                 setcateName(rawcateData.cateName);
+                setcateColor(rawcateData.cateColor);
 
             }).catch( (err) => console.log(err))
 
@@ -43,7 +46,9 @@ const Editcategories = () => {
 
         // Create an object `dataObj` to store the updated category data.
         const dataObj = {
-            cateName
+            cateName,
+            cateColor
+
         }
 
         console.log(dataObj);
@@ -90,10 +95,28 @@ const Editcategories = () => {
                         <div className="inp">
                             <input type="text" placeholder="Enter Catetask Name" onChange={e => setcateName(e.target.value)} value={cateName}/>
                         </div>
-
-                        <div className="">
-                            <button type="submit" className="btn btn-primary" >Update</button>
-                            <button type="button" className="btn btn-secondary" onClick={() => navigate(`/`)}>Cancel</button>
+                        <div className="buttons">
+                        <div className="catebtns">
+                            <DropdownButton variant="secondary"  title="Choose Color">
+                                <Dropdown.Item onClick={e => setcateColor("pink")} value={cateColor}>
+                                    Pink <span className="dotPink"></span>
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={e => setcateColor("deepskyblue")} value={cateColor}>
+                                    Blue <span className="dotBlue"></span>
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={e => setcateColor("yellow")} value={cateColor}>
+                                    Yellow <span className="dotYellow"></span>
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={e => setcateColor("orange")} value={cateColor}>
+                                    Orange <span className="dotOrange"></span>
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={e => setcateColor("mediumseagreen")} value={cateColor}>
+                                    Green <span className="dotGreen"></span>
+                                </Dropdown.Item>
+                            </DropdownButton>
+                        </div>
+                            <button type="submit" className="btn btn-light " >Update</button>
+                            <button type="button" className="btn btn-light" onClick={() => navigate(`/`)}>Cancel</button>
                         </div>
                     </form>
                 </div>

@@ -66,7 +66,7 @@ const Sidebar = () => {
                     </div>
                 ))}
             </div>
-            <div className={"addCate"}>
+            <div className="addCate">
                 <h5 id="newCate">Add a new category</h5>
                 <Addcategories></Addcategories>
             </div>

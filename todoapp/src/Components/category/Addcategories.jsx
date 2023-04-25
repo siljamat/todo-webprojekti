@@ -9,7 +9,7 @@ const Addcategories = () => {
 
     // Set up state for the category name input
     const [cateName , setcateName] = useState("")
-    const [cateColor, setcateColor] = useState("blue")
+    const [cateColor, setcateColor] = useState("deepskyblue")
     // Function to handle adding a new category
     const addCategory = (e) => {
 
@@ -42,11 +42,11 @@ const Addcategories = () => {
                                     </div>
                                 </div>
                             <div className="catebtns">
-                                    <DropdownButton className="colorbtn" title="Choose Color">
+                                    <DropdownButton variant="secondary" title="Choose Color">
                                         <Dropdown.Item onClick={e => setcateColor("pink")} value={cateColor}>
                                             Pink <span className="dotPink"></span>
                                         </Dropdown.Item>
-                                        <Dropdown.Item onClick={e => setcateColor("blue")} value={cateColor}>
+                                        <Dropdown.Item onClick={e => setcateColor("deepskyblue")} value={cateColor}>
                                             Blue <span className="dotBlue"></span>
                                         </Dropdown.Item>
                                         <Dropdown.Item onClick={e => setcateColor("yellow")} value={cateColor}>
@@ -55,7 +55,7 @@ const Addcategories = () => {
                                         <Dropdown.Item onClick={e => setcateColor("orange")} value={cateColor}>
                                             Orange <span className="dotOrange"></span>
                                         </Dropdown.Item>
-                                        <Dropdown.Item onClick={e => setcateColor("green")} value={cateColor}>
+                                        <Dropdown.Item onClick={e => setcateColor("mediumseagreen")} value={cateColor}>
                                             Green <span className="dotGreen"></span>
                                         </Dropdown.Item>
                                     </DropdownButton>
