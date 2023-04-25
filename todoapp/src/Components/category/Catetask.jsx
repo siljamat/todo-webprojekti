@@ -35,7 +35,7 @@ const Catetask = () => {
     // Filter the task list data by category name using the filter() method
     let cateFil = todolist.filter((row) => {
         console.log(todolist)
-        if (row.category === cateName) {
+        if (row.category === cateName.toUpperCase()) {
             return (row)
         }
     })

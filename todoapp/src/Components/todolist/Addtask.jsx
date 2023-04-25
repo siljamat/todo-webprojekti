@@ -34,7 +34,7 @@ const Addtask = () => {
         const dataObj = {
             taskName,
             date: tDate,
-            category,
+            category
         }
 
         console.log(dataObj);
@@ -65,7 +65,7 @@ const Addtask = () => {
 
                                 <div className="row g-3">
                                     <div className="col">
-                                        <input type="text" className="form-control" placeholder="Enter Task Name" onChange={e => settaskName(e.target.value)} value={taskName} />
+                                        <input type="text" className="form-control" placeholder="Enter Task Name" onChange={e => settaskName(e.target.value)} value={taskName.toLowerCase()} />
                                     </div>
 
                                     <div className="col">

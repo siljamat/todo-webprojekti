@@ -50,6 +50,7 @@ const Edittask = () => {
     // Handler function for updating the data
     const updateHandler = (e) => {
         e.preventDefault()
+        settaskName(taskName.toLowerCase)
         const dataObj = {
             taskName,
             category
