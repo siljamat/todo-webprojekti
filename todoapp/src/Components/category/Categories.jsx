@@ -51,7 +51,7 @@ const Categories = () => {
                     return(
                         <>
                             <div className='catecont'>
-                                <div className='cateRow'>
+                                <div className='row'>
                                     <div>
                                         <con.TbChartDonut3 size={50} /> {/* Adding chart icon */}
                                     </div>

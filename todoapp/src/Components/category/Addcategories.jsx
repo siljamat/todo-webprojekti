@@ -15,6 +15,10 @@ const Addcategories = () => {
 
         e.preventDefault()
 
+        if (!cateName.trim()) {
+            alert('Please enter a name');
+            return;
+        }
         // Create an object with the category name and color input
         const dataObj = {
             cateName,

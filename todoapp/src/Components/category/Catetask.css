@@ -4,12 +4,14 @@
     position: fixed;
     right: 0px;
 }
+
 h2{
     margin-top: 20px;
 }
 #nav{
     margin-top: 20px;
 }
+
 @media screen and (max-width: 1150px) {
     .bg{
         width: 100%;
@@ -24,6 +26,19 @@ h2{
         left: 5px;
     }
 }
-.cont{
-    background-color: white;
+.cateTask{
+    display: grid;
+    grid-template-columns:0.5fr 3fr 0.2fr;
+    justify-content: space-around;
+    align-items: center;
+    background: #f6f7f9;
+    /*box-shadow: 0px 0px 3px 0px rgb(116, 116, 117);*/
+    border-radius: 7px;
+    margin-bottom: 10px;
+    padding: 15px 7px;
+}
+.catcont{
+    width: 70%;
+    margin: 20px auto;
+    text-align: center;
 }

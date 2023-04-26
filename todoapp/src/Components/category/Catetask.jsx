@@ -71,9 +71,9 @@ const Catetask = () => {
                         </Container>
                     </Navbar>
                 </div>
-                <div class="cont">
+                <div className="cont">
                     <h3>No todo's in this category</h3>
-                    <p>Add new toDos from the button blow</p>
+                    <p>Add new ToDos from the button blow</p>
                 </div>
             </div>
             <div className='sidebar'>
@@ -113,7 +113,7 @@ const Catetask = () => {
                         </Navbar>
                     </div>
 
-                    <div className="cont">
+                    <div className="catcont">
                         {
                             cateFil.map((row) => {
                                 let newdate = row.date
@@ -123,7 +123,7 @@ const Catetask = () => {
 
                                 return (
                                     <>
-                                        <div className="cateRow">
+                                        <div className="cateTask">
                                             <p>{da}</p>
                                             <p>{row.taskName.toUpperCase()}</p>
                                             <div className="dropdown">

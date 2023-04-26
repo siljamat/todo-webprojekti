@@ -2,8 +2,8 @@
   font-size: 1.4rem;
 }
 .nme p{
-    font-size: 0.8rem;
-    line-height: 3px;
+  font-size: 0.8rem;
+  line-height: 3px;
 }
 .nme{
   text-align: center;
@@ -42,4 +42,19 @@
   border-radius: 5px;
   padding: 10px;
   margin: 0 150px;
+}
+.cateRow{
+  display: grid;
+  grid-template-columns:0.5fr 3fr 0.2fr;
+  justify-content: space-around;
+  align-items: center;
+  background: #f6f7f9;
+  /*box-shadow: 0px 0px 3px 0px rgb(116, 116, 117);*/
+  border-radius: 7px;
+  margin-bottom: 10px;
+  padding: 15px 7px;
+}
+.catecont{
+  width: 70%;
+  margin: 20px auto;
 }

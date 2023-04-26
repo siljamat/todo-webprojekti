@@ -48,7 +48,6 @@ const Editcategories = () => {
         const dataObj = {
             cateName,
             cateColor
-
         }
 
         console.log(dataObj);
@@ -91,9 +90,10 @@ const Editcategories = () => {
                 </Navbar>
             </div>
                 <div className="cont" >
+                    <div className="content">
                     <form onSubmit={updateCategory}>
                         <div className="inp">
-                            <input type="text" placeholder="Enter Catetask Name" onChange={e => setcateName(e.target.value)} value={cateName}/>
+                            <input type="text" placeholder="Enter Category Name" onChange={e => setcateName(e.target.value)} value={cateName}/>
                         </div>
                         <div className="buttons">
                         <div className="catebtns">
@@ -115,10 +115,11 @@ const Editcategories = () => {
                                 </Dropdown.Item>
                             </DropdownButton>
                         </div>
-                            <button type="submit" className="btn btn-light " >Update</button>
-                            <button type="button" className="btn btn-light" onClick={() => navigate(`/`)}>Cancel</button>
+                            <button type="submit" className="btn btn-light m-3 mt-1" >Update</button>
+                            <button type="button" className="btn btn-light m-3 mt-1" onClick={() => navigate(`/`)}>Cancel</button>
                         </div>
                     </form>
+                    </div>
                 </div>
         </div>
             <div className='sidebar'>

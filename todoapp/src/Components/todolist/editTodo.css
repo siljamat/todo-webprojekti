@@ -1,5 +1,12 @@
-.cont{
-    padding: 20px;
+.sis{
+    background-color: #f6f7f9;
+    width: 70%;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.bg{
+    text-align: center;
 }
 .orange{
     height: 15px;
@@ -45,5 +52,4 @@
 }
 .catebtn{
     margin-top: 5px;
-    text-align: start;
 }

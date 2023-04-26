@@ -5,6 +5,8 @@ import './Addtask.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import {DropdownButton} from "react-bootstrap";
+import DropdownItem from "react-bootstrap/DropdownItem";
 
 const Addtask = () => {
 
@@ -29,26 +31,32 @@ const Addtask = () => {
 
     // Event handler function to add new task to the database
     const addHandler = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+
+        if (!taskName.trim() || !tDate) {
+            alert('Please enter at least name and date');
+            return;
+        }
 
         const dataObj = {
             taskName,
             date: tDate,
-            category
-        }
+            category,
+        };
 
         console.log(dataObj);
 
         // Making a POST request to the server to add new task
-        axios.post("http://localhost:2000/todolist", dataObj)
+        axios.post('http://localhost:2000/todolist', dataObj);
 
-        alert("Task Added Successfully")
+        alert('Task Added Successfully');
 
         // Reloading the page to reflect the changes
-        window.location.reload()
-    }
+        window.location.reload();
+    };
 
-     return (
+
+    return (
         <>
             <button type='button' id='addbtn' data-bs-toggle="modal" data-bs-target="#staticBackdrop"><Icon.Plus size={40} /></button>
 
@@ -71,21 +79,31 @@ const Addtask = () => {
                                     <div className="col">
                                         <input type="datetime-local" className="form-control" placeholder="Date" onChange={e => settDate(e.target.value)} value={tDate} />
                                     </div>
-                                    
+                                    <DropdownButton className="catebtn" variant="light" title="Choose category">
+                                        {
+                                            cateData.map(row => {
+                                                return(
+                                                    <DropdownItem onClick={e => setcategory(row.cateName)} value={category}>{row.cateName}
+                                                        <span style={{backgroundColor: row.cateColor}} className="circle"></span>
+                                                    </DropdownItem>
+                                                )
+                                            })
+                                        }
+                                    </DropdownButton>
 
-                                    <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={e => setcategory(e.target.value)} value={category}>
+                    {/*                <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={e => setcategory(e.target.value)} value={category}>
                                         <option defaultValue>Select Category</option>
                                         {
                                             cateData.map(row => { return (<option>{row.cateName.toUpperCase()}</option>) })
                                         }
-                                    </select>
+                                    </select>*/}
                                 </div>
 
                             </div>
 
                             <div className="modal-footer" style={{ borderWidth:"3px"}}>
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => navigate("/")}>Close</button>
-                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Add</button>
+                                <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={() => navigate("/")}>Close</button>
+                                <button type="submit" className="btn btn-secondary" data-bs-dismiss="modal">Add</button>
                             </div>
                         </form>
                     </div>

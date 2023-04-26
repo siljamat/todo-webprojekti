@@ -20,6 +20,7 @@ const Edittask = () => {
     const [todolistData , settodolistData] = useState([])
     const [taskName , settaskName] = useState("")
     const[category , setcategory] = useState()
+    const[origName, setOrigName] = useState()
 
     // Use useEffect hook to fetch data from the server based on the _id
     useEffect(() => {
@@ -28,7 +29,7 @@ const Edittask = () => {
                 const rawtodolistData = await res.data[0];
                 settodolistData(rawtodolistData);
                 settaskName(rawtodolistData.taskName);
-                setcategory(rawtodolistData.category)
+                setcategory(rawtodolistData.category);
             }).catch((err) => console.log(err))
     }, [_id])
 
@@ -50,7 +51,9 @@ const Edittask = () => {
     // Handler function for updating the data
     const updateHandler = (e) => {
         e.preventDefault()
+
         settaskName(taskName.toLowerCase)
+
         const dataObj = {
             taskName,
             category
@@ -86,16 +89,15 @@ const Edittask = () => {
                             </Navbar.Collapse>
                         </Container>
                     </Navbar>
+                </div>
+
                 <div className='cont'>
+                    <div className="sis">
                     <form onSubmit={updateHandler}>
-                        <div className="row g-3">
-                            <div className="col">
                                 <p>Add the updated name and/or category below</p>
                             <input type="text" className="form-control" placeholder={taskName} onChange={e => settaskName(e.target.value)} value={taskName} />
-                            </div>
-                            </div>
                         <div className="btns">
-                        <DropdownButton className="catebtn" variant="light" title="Choose category">
+                        <DropdownButton className="catebtn" variant="secondary" title="Choose category">
                             {
                                 cateData.map(row => {
                                     return(
@@ -122,8 +124,9 @@ const Edittask = () => {
                         </div>
                     </form>
                 </div>
+                </div>
             </div>
-            </div>
+
                 <div className='sidebar'>
                     <Sidebar />
                 </div>
