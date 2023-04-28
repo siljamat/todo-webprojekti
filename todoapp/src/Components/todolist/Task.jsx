@@ -7,6 +7,7 @@ import DatePicker from "react-date-picker";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import {Nav, Navbar, Container} from 'react-bootstrap';
+import edittask from "./Edittask";
 
 const Task = () => {
     const [todolist, setTodolist] = useState([]);
@@ -114,11 +115,11 @@ const Task = () => {
                             });
 
                             if (todoForDate) {
-                               return (
-                                   <button onClick={() => handleShowDay()}>
-                                    <p>{todoForDate.taskName}</p>
-                                </button>
-                               )
+                                return (
+                                    <button onClick={() => handleShowDay()}>
+                                        <p>{todoForDate.taskName}</p>
+                                    </button>
+                                )
                             }
                         }}
                     />
@@ -165,9 +166,9 @@ const Task = () => {
                                                     aria-labelledby="dropdownMenuButton1"
                                                 >
                                                     <li>
-                                                        <button type='button' className='navbtn dropdown-item' onClick={() => navigate(`/edittask/${row._id}`)}>
-                                                        <Icon.PencilSquare/>
-                                                        Edit
+                                                        <button type='button' className='navbtn dropdown-item ' onClick={() => navigate(`/edittask/${row._id}`)}>
+                                                            <Icon.PencilSquare/>
+                                                            Edit
                                                         </button>
                                                     </li>
                                                     <li>
