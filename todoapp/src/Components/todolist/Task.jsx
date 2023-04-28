@@ -143,7 +143,7 @@ const Task = () => {
                                             <div>
                                                 <div className="time">
                                                     <p>
-                                                        {d.getDay()}.{d.getMonth()}.{d.getFullYear()} <br/> {d.getHours()}:{d.getMinutes()}
+                                                        {d.getDate().toString().padStart(2, '0')}.{(d.getMonth() + 1).toString().padStart(2, '0')}.{d.getFullYear()} <br/> {d.getHours()}:{d.getMinutes()}
                                                     </p>
                                                 </div>
                                             </div>
@@ -196,6 +196,12 @@ const Task = () => {
                         {filterlist.map((row) => {
                             const newdate = row.date;
                             const d = new Date(newdate);
+                            let cateColor;
+                            const category = cateData.find((cate) => cate.cateName === row.category);
+                            if (category) {
+                                cateColor = category.cateColor;
+                                console.log(cateColor)
+                            }
                             return (
                                 <>
                                     <div className="catecont">
@@ -210,7 +216,7 @@ const Task = () => {
 
                                             <div className="nme">
                                                 <h3>{row.taskName.toUpperCase()}</h3>
-                                                <p>{row.category}</p>
+                                                <p className="category" style={{backgroundColor: cateColor}}>{row.category}</p>
                                             </div>
 
                                             <div className="dropdown">

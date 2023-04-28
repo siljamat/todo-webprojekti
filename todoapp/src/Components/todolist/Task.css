@@ -38,7 +38,10 @@
 .category{
   border-radius: 5px;
   padding: 10px;
+  width: 80%;
+  margin: 0 auto;
 }
+
 .cateRow{
   display: grid;
   grid-template-columns:0.5fr 3fr 0.2fr;

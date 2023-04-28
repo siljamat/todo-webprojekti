@@ -30,6 +30,10 @@
     margin: 20px;
 }
 
+.kalenteri {
+    padding-bottom: 10%;
+}
+
 @media screen and (max-width: 1150px) {
     .sidebar {
         display: none;
