@@ -10,10 +10,21 @@
 }
 
 .react-calendar button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-radius: 5px;
+    margin-top: 1%;
 }
 
 .react-date-picker__wrapper {
     padding: 1px;
     border-radius: 5px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0 !important;
+    padding: 2%;
 }

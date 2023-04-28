@@ -120,7 +120,7 @@ const Edittask = () => {
                             }
                         </select>*/}
                             <button type="submit" className="btn btn-light m-1">Update</button>
-                            <button type="button" className="btn btn-light" onClick={() => navigate("/")}>cancel</button>
+                            <button type="button" className="btn btn-light" onClick={() => navigate("/")}>Cancel</button>
                         </div>
                     </form>
                 </div>

@@ -50,12 +50,12 @@ const Sidebar = () => {
                             <div className="category-actions">
                             <Button id="tasks" variant="light"
                                     onClick={() => navigate(`/Catetask/${category.cateName}`)}>
-                                    show todos
+                                    Show todos
                                 </Button>
                                 <Button
                                     className="category-delete-button" variant="light"
                                     onClick={() => navigate(`/editcategories/${category._id}`)}>
-                                    edit
+                                    Edit
                                 </Button>
                             <Button
                                 className="category-delete-button" variant="light"

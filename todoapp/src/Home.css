@@ -43,4 +43,17 @@
     .backg {
         width: 100%;
     }
+    #addbtn {
+        height: 10%;
+        width: 10%;
+    }
+    img, svg {
+        vertical-align: middle;
+        height: 80%;
+        width: 80%;
+    }
+    .category {
+        border-radius: 5px;
+        padding: 10px;
+    }
 }
