@@ -1,0 +1,19 @@
+.react-calendar {
+    width: 75% !important;
+    margin: 5% auto;
+    color: #222;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    padding: 2%;
+    background: #f6f7f9 !important;
+    border: 0 !important;
+}
+
+.react-calendar button {
+    border-radius: 5px;
+}
+
+.react-date-picker__wrapper {
+    padding: 1px;
+    border-radius: 5px;
+}
