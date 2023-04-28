@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as Icon from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import "./Task.css";
+import "./Calendar.css";
 import axios from "axios";
 import DatePicker from "react-date-picker";
 import Calendar from "react-calendar";

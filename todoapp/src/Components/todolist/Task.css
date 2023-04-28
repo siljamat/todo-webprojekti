@@ -22,10 +22,7 @@
   display: flex;
   justify-content: space-evenly;
 }
-.react-calendar {
-  width: 100%;
-  margin: 0 auto;
-}
+
 .button-group button:not(:last-child) {
   border-right: 1px solid black;
   padding-right: 10px;
