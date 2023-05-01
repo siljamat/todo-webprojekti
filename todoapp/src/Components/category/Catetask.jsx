@@ -32,10 +32,10 @@ const Catetask = () => {
         })
     })
 
+
     // Filter the task list data by category name using the filter() method
     let cateFil = todolist.filter((row) => {
-        console.log(todolist)
-        if (row.category === cateName.toUpperCase()) {
+        if (row.category === cateName) {
             return (row)
         }
     })
@@ -51,6 +51,7 @@ const Catetask = () => {
     };
 
     if (!cateFil.length) {
+
         return <>
             <div className="bg">
                 <h2>ToDos in {cateName}</h2>
@@ -73,7 +74,6 @@ const Catetask = () => {
                 </div>
                 <div className="cont">
                     <h3>No todo's in this category</h3>
-                    <p>Add new ToDos from the button blow</p>
                 </div>
             </div>
             <div className='sidebar'>
@@ -90,7 +90,6 @@ const Catetask = () => {
         </>
     } else
     {
-
         return (
             <>
                 <div className="bg">

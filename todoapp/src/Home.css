@@ -24,7 +24,7 @@
     display: none;
 }
 #otsikko{
-    color: #1b7e7e;
+    text-align: center;
 }
 #header{
     margin: 20px;
@@ -46,10 +46,6 @@
     }
     .backg {
         width: 100%;
-    }
-    #addbtn {
-        height: 10%;
-        width: 10%;
     }
     img, svg {
         vertical-align: middle;

@@ -92,7 +92,7 @@ const Task = () => {
                             </button>
                             <button
                                 className="text-nowrap" onClick={handleShowDay}>
-                                <DatePicker onChange={onChange} value={value} />
+                                <DatePicker clearIcon={null} onChange={onChange} value={value} />
                             </button>
                             <button className="text-nowrap" onClick={handleShowList}>
                                 Show all as a list
