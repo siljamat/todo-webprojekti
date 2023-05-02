@@ -9,6 +9,11 @@ import axios from 'axios'; // Importing axios for HTTP requests
 import { useState } from 'react'; // Importing hook to use state in functional component
 import Highlighter from "react-highlight-words";
 
+/**
+ * A React component that displays a list of categories.
+ *
+ * @return {JSX.Element} The React component.
+ */
 const Categories = () => {
 
     const navigate = useNavigate(); // Initializing useNavigate hook for navigation to different pages
@@ -23,11 +28,17 @@ const Categories = () => {
 
                 setcateData(rawcateData);
 
-            }).catch( (err) => console.log(err))
+            }).catch((err) => console.log(err))
 
-    },[]);
+    }, []);
 
-    const deleteHandler = async(_id) => { // Function to handle category deletion on clicking delete button
+    /**
+     * Deletes a category from the server and reloads the page.
+     *
+     * @param {string} _id The ID of the category to delete.
+     * @return {void}
+     */
+    const deleteHandler = async (_id) => { // Function to handle category deletion on clicking delete button
         await axios.delete(`http://localhost:2000/category/${_id}`);
 
         alert("Catetask Deleted Successfully");
@@ -37,46 +48,71 @@ const Categories = () => {
 
     return (
         <>
-            <div className='backg'>
-                <div className='navbar'>
-                    <button type='button' className='navbtn' onClick={() => navigate("/")}>
+            <div className="backg">
+                <div className="navbar">
+                    <button
+                        type="button"
+                        className="navbtn"
+                        onClick={() => navigate("/")}
+                    >
                         <Icon.List size={30}/>
                     </button>
                     <h2>Categories</h2>
                     <Addcategories/> {/* Add categories component to add new categories */}
                 </div>
 
-                {cateData.map((row) => { // Mapping through the categories array to render each category row
+                {cateData.map((row) => {
+                    // Mapping through the categories array to render each category row
 
-                    return(
+                    return (
                         <>
-                            <div className='catecont'>
-                                <div className='row'>
+                            <div className="catecont">
+                                <div className="row">
                                     <div>
-                                        <con.TbChartDonut3 size={50} /> {/* Adding chart icon */}
+                                        <con.TbChartDonut3 size={50}/>
+                                        {/* Adding chart icon */}
                                     </div>
-                                    <div className='nme'>
-
+                                    <div className="nme">
                                         <p>
-                                            <button className='tasks' onClick={() => navigate(`/Catetask/${row.cateName}`)}>View task's</button>
+                                            <button
+                                                className="tasks"
+                                                onClick={() =>
+                                                    navigate(`/Catetask/${row.cateName}`)
+                                                }
+                                            >
+                                                View task's
+                                            </button>
                                         </p>
                                     </div>
 
                                     {/* Adding dropdown menu for each category row */}
                                     <div class="dropdown">
-                                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button
+                                            class="btn"
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                        >
                                             <Icon.ThreeDotsVertical/>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             {/* Edit button to navigate to edit categories page */}
                                             <li>
-                                                <button type='button' className='navbtn dropdown-item ' onClick={() => navigate(`/editcategories/${row._id}`)}>
+                                                <button
+                                                    type="button"
+                                                    className="navbtn dropdown-item "
+                                                    onClick={() => navigate(`/editcategories/${row._id}`)}
+                                                >
                                                     <Icon.PencilSquare/> Edit
                                                 </button>
                                             </li>
                                             {/* Delete button to delete the category */}
                                             <li>
-                                                <button type='button' className='navbtn dropdown-item' onClick={() => deleteHandler(row._id)}>
+                                                <button
+                                                    type="button"
+                                                    className="navbtn dropdown-item"
+                                                    onClick={() => deleteHandler(row._id)}
+                                                >
                                                     <Icon.XLg/> Delete
                                                 </button>
                                             </li>
@@ -85,12 +121,9 @@ const Categories = () => {
                                 </div>
                             </div>
                         </>
-                    )
-
+                    );
                 })}
             </div>
         </>
     );
 };
-
-export default Categories;
