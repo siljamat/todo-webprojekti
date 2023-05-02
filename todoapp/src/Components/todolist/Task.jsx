@@ -8,35 +8,37 @@ import DatePicker from "react-date-picker";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import {Nav, Navbar, Container} from 'react-bootstrap';
-import edittask from "./Edittask";
 
+/**
+ * Component for managing tasks and displaying them in a calendar view
+ * @returns {JSX.Element} Task component
+ */
 const Task = () => {
     const [todolist, setTodolist] = useState([]);
     const [value, onChange] = useState(new Date());
     const [showAll, setShowAll] = useState(false);
-    const [showList, setShowList] = useState(false); // uusi tila kaikille tehtäville
+    const [showList, setShowList] = useState(false); // new state for showing all tasks
     const [cateData, setcateData] = useState([]); // Initializing state for category data fetched from server
 
     const navigate = useNavigate();
 
-
-
-    useEffect(() => { // Using useEffect hook to fetch category data from server on initial load
-
+    /**
+     * Fetches category data from server on initial load using useEffect hook
+     */
+    useEffect(() => {
         axios.get("http://localhost:2000/category")
             .then(async (res) => {
-
                 const rawcateData = await res.data;
-
                 setcateData(rawcateData);
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
-            }).catch( (err) => console.log(err))
-
-    },[]);
-
+    /**
+     * Fetches task data from server on initial load using useEffect hook
+     */
     useEffect(() => {
-        axios
-            .get("http://localhost:2000/todolist")
+        axios.get("http://localhost:2000/todolist")
             .then(async (res) => {
                 const rawTodolist = await res.data;
                 setTodolist(rawTodolist);
@@ -44,6 +46,10 @@ const Task = () => {
             .catch((err) => console.log(err));
     }, []);
 
+    /**
+     * Filters the list of tasks based on selected date and view mode
+     * @type {Array} List of filtered tasks
+     */
     let filterlist = todolist.filter((row) => {
         const newdate = row.date;
         const d = new Date(newdate);
@@ -59,25 +65,38 @@ const Task = () => {
         }
     });
 
+    /**
+     * Deletes a task with the specified id from the database
+     * @param {string} _id - The id of the task to be deleted
+     */
     const deleteHandler = async (_id) => {
         await axios.delete(`http://localhost:2000/todolist/${_id}`);
         alert("Task Deleted Successfully");
         window.location.reload();
     };
 
+    /**
+     * Sets the showAll state to true and hides the task list if it is currently visible
+     */
     const handleShowAll = () => {
         setShowAll(true);
-        setShowList(false); // piilotetaan lista, jos se on avoinna
+        setShowList(false);
     };
 
+    /**
+     * Sets the showAll state to false and hides the task list if it is currently visible
+     */
     const handleShowDay = () => {
         setShowAll(false);
-        setShowList(false); // piilotetaan lista, jos se on avoinna
+        setShowList(false);
     };
 
+    /**
+     * Sets the showList state to true and hides the calendar view if it is currently visible
+     */
     const handleShowList = () => {
         setShowList(true);
-        setShowAll(false); // piilotetaan kalenteri, jos se on avoinna
+        setShowAll(false);
     };
 
     return (
@@ -103,7 +122,7 @@ const Task = () => {
             </Navbar>
             <div className="kalenteri">
                 {showAll ? (
-                    //Kalenterinäkymä
+                    //Calendar
                     <Calendar
                         value={value}
                         onChange={onChange}
@@ -125,7 +144,7 @@ const Task = () => {
                         }}
                     />
                 ) : showList ? (
-                    // Näytetään kaikki tehtävät listana
+                    // NShow all todos as a list
                     <div>
                         {todolist.map((row) => {
                             const newdate = row.date;
@@ -191,7 +210,7 @@ const Task = () => {
                         })}
                     </div>
                 ) : (
-                    //Näytetään kaikki tehtävät yksitellen
+                    //Show all todos one by one
                     <div>
                         {filterlist.map((row) => {
                             const newdate = row.date;
