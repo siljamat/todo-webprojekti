@@ -10,6 +10,9 @@ import Addtask from "../todolist/Addtask";
 import Editcategories from "./Editcategories";
 import * as Icon from "react-bootstrap-icons";
 
+/**
+ * This component displays the tasks associated with a particular category.
+ */
 const Catetask = () => {
 
     const navigate = useNavigate()
@@ -24,16 +27,20 @@ const Catetask = () => {
     useEffect(() => {
         axios.get(`http://localhost:2000/todolist`)
             .then(async (res) => {
-                    const rawtodolist = await res.data
-                    settodolist(rawtodolist)
-                }
-            ).catch((err) => {
-            console.log(err)
-        })
-    })
+                const rawtodolist = await res.data
+                settodolist(rawtodolist)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
 
-
-    // Filter the task list data by category name using the filter() method
+    /**
+     * Filters the task list data by category name.
+     *
+     * @param {object} row - A task object in the task list.
+     * @returns {boolean} - Returns true if the task belongs to the specified category, false otherwise.
+     */
     let cateFil = todolist.filter((row) => {
         if (row.category === cateName) {
             return (row)
@@ -41,17 +48,38 @@ const Catetask = () => {
     })
 
     const [show, setShow] = useState(false);
+
+    /**
+     * Closes the sidebar.
+     */
     const closeSidebar = () => setShow(false);
+
+    /**
+     * Shows the sidebar.
+     */
     const showSidebar = () => setShow(true);
 
+    /**
+     * Deletes a task from the task list.
+     *
+     * @param {string} _id - The ID of the task to be deleted.
+     */
     const deleteHandler = async (_id) => {
         await axios.delete(`http://localhost:2000/todolist/${_id}`);
         alert("Task Deleted Successfully");
         window.location.reload();
     };
 
-    if (!cateFil.length) {
 
+    /**
+     * Render a component with category name and navigation bar,
+     * along with a message indicating no todos in this category.
+     * @param {string} cateName - The name of the category being displayed
+     * @param {Array} cateFil - The filtered list of todos for the category
+     * @param {Function} showSidebar - The function to show the sidebar
+     * @param {Function} closeSidebar - The function to close the sidebar
+     */
+    if (!cateFil.length) {
         return <>
             <div className="bg">
                 <h2>ToDos in {cateName}</h2>
@@ -88,8 +116,20 @@ const Catetask = () => {
             </Offcanvas>
             <Addtask/>
         </>
-    } else
-    {
+    } /**
+     * Renders the ToDos in the selected category if there are any, otherwise renders a message indicating that there are no ToDos in that category.
+     *
+     * @param {Object} props - The component props.
+     * @param {string} props.cateName - The name of the selected category.
+     * @param {Array} props.cateFil - An array containing the ToDos in the selected category.
+     * @param {Function} props.showSidebar - A function to show the sidebar.
+     * @param {Boolean} props.show - A boolean indicating whether the sidebar should be displayed or not.
+     * @param {Function} props.closeSidebar - A function to close the sidebar.
+     * @param {Function} props.navigate - A function to navigate to a different route.
+     * @param {Function} props.deleteHandler - A function to delete a ToDo.
+     * @returns {JSX.Element} - A React component representing the ToDos in the selected category.
+     */
+    else {
         return (
             <>
                 <div className="bg">
