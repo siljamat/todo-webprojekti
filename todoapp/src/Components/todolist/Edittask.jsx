@@ -10,59 +10,58 @@ import Addtask from "./Addtask";
 import './editTodo.css'
 import DropdownItem from "react-bootstrap/DropdownItem";
 
-const Edittask = () => {
+/**
+ * Edittask component for editing a todo item.
+ * @param {object} props - Component props.
+ * @param {object} props.user - User object.
+ * @returns {JSX.Element} - Rendered component.
+ */
+const Edittask = ({ user }) => {
+    const navigate = useNavigate();
+    const { _id } = useParams();
 
-    // Initialize navigate and _id variables using hooks
-    const navigate = useNavigate()
-    const {_id} = useParams()
+    const [todolistData, settodolistData] = useState({});
+    const [taskName, settaskName] = useState("");
+    const [category, setcategory] = useState("");
+    const [origName, setOrigName] = useState("");
 
-    // Initialize state variables for todolist data, task name, and category
-    const [todolistData , settodolistData] = useState([])
-    const [taskName , settaskName] = useState("")
-    const[category , setcategory] = useState()
-    const[origName, setOrigName] = useState()
-
-    // Use useEffect hook to fetch data from the server based on the _id
     useEffect(() => {
-        axios.get(`http://localhost:2000/todolist/${_id}`)
+        axios
+            .get(`http://localhost:2000/todolist/${_id}`)
             .then(async (res) => {
                 const rawtodolistData = await res.data[0];
                 settodolistData(rawtodolistData);
                 settaskName(rawtodolistData.taskName);
                 setcategory(rawtodolistData.category);
-            }).catch((err) => console.log(err))
-    }, [_id])
+            })
+            .catch((err) => console.log(err));
+    }, [_id]);
 
-    console.log(todolistData);
-
-    // Use useEffect hook to fetch all categories from the server
-    const [cateData, setcateData] = useState([])
+    const [cateData, setcateData] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:2000/category")
+        axios
+            .get("http://localhost:2000/category")
             .then(async (res) => {
                 const rawcateData = await res.data;
                 setcateData(rawcateData);
-            }).catch((err) => console.log(err))
-    }, [])
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
-    console.log(cateData)
-
-    // Handler function for updating the data
     const updateHandler = (e) => {
-        e.preventDefault()
-
-        settaskName(taskName.toLowerCase)
+        e.preventDefault();
+        settaskName(taskName.toLowerCase());
 
         const dataObj = {
             taskName,
-            category
-        }
-        console.log(dataObj);
-        axios.put(`http://localhost:2000/todolist/${_id}`, dataObj)
+            category,
+        };
+
+        axios.put(`http://localhost:2000/todolist/${_id}`, dataObj);
         alert("ToDo updated successfully");
-        navigate("/")
-    }
+        navigate("/");
+    };
 
     const [show, setShow] = useState(false);
     const closeSidebar = () => setShow(false);
@@ -108,17 +107,6 @@ const Edittask = () => {
                                 })
                             }
                         </DropdownButton>
-
-{/*                        <select className="form-select form-select-sm mt-2" aria-label=".form-select-sm example" onChange={e => setcategory(e.target.value)} value={category}>
-                            <option defaultValue>original: {category}</option>
-                            {
-                                cateData.map(row => {
-                                    return (
-                                        <option className="selectCate">{row.cateName}</option>
-                                    )
-                                })
-                            }
-                        </select>*/}
                             <button type="submit" className="btn btn-light m-1">Update</button>
                             <button type="button" className="btn btn-light" onClick={() => navigate("/")}>Cancel</button>
                         </div>

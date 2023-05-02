@@ -8,6 +8,11 @@ import { useNavigate } from 'react-router-dom'
 import {DropdownButton} from "react-bootstrap";
 import DropdownItem from "react-bootstrap/DropdownItem";
 
+/**
+ * Addtask component for adding new task to the database
+ *
+ * @return {JSX.Element} Returns the JSX code for the Addtask component
+ */
 const Addtask = () => {
 
     // Using useNavigate hook from React Router to navigate between pages
@@ -29,7 +34,11 @@ const Addtask = () => {
             }).catch((err) => console.log(err))
     }, [])
 
-    // Event handler function to add new task to the database
+    /**
+     * Event handler function to add new task to the database
+     *
+     * @param {Object} e - Event object
+     */
     const addHandler = (e) => {
         e.preventDefault();
 
