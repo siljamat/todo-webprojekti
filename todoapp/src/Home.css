@@ -38,6 +38,12 @@
     .sidebar {
         display: none;
     }
+    #addbtn{
+        height: 70px;
+        width: 70px;
+        bottom: 20px;
+        right: 15px;
+    }
     #sidebtn{
         display: inline-block;
         position: fixed;
@@ -46,14 +52,5 @@
     }
     .backg {
         width: 100%;
-    }
-    img, svg {
-        vertical-align: middle;
-        height: 80%;
-        width: 80%;
-    }
-    .category {
-        border-radius: 5px;
-        padding: 10px;
     }
 }

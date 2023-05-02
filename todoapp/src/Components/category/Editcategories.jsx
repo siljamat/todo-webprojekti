@@ -91,7 +91,8 @@ const Editcategories = () => {
             </div>
                 <div className="cont" >
                     <div className="content">
-                    <form onSubmit={updateCategory}>
+                        <p>Enter the updated name and/or category below</p>
+                        <form onSubmit={updateCategory}>
                         <div className="inp">
                             <input type="text" placeholder="Enter Category Name" onChange={e => setcateName(e.target.value)} value={cateName}/>
                         </div>
