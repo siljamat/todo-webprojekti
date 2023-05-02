@@ -9,6 +9,11 @@ import Addtask from "../todolist/Addtask";
 import Dropdown from "react-bootstrap/Dropdown";
 
 
+/**
+ * Component for editing a category.
+ *
+ * @returns JSX element
+ */
 const Editcategories = () => {
 
     // Use the `useNavigate` hook to access the router's `navigate` function.
@@ -39,7 +44,11 @@ const Editcategories = () => {
 
     }, [_id])
 
-    // Define a function to handle the form submission.
+    /**
+     * Function to handle the form submission.
+     *
+     * @param {object} e - The form submission event.
+     */
     const updateCategory = (e) => {
 
         e.preventDefault()
@@ -63,7 +72,15 @@ const Editcategories = () => {
     }
 
     const [show, setShow] = useState(false);
+
+    /**
+     * Function to close the sidebar.
+     */
     const closeSidebar = () => setShow(false);
+
+    /**
+     * Function to show the sidebar.
+     */
     const showSidebar = () => setShow(true);
 
 
