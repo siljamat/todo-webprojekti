@@ -7,7 +7,6 @@ import Addcategories from './Addcategories'; // Importing component for adding n
 import { useEffect } from 'react'; // Importing hook to use lifecycle methods
 import axios from 'axios'; // Importing axios for HTTP requests
 import { useState } from 'react'; // Importing hook to use state in functional component
-import Highlighter from "react-highlight-words";
 
 const Categories = () => {
 

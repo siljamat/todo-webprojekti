@@ -26,7 +26,7 @@ const Home = () => {
                     <Button id="sidebtn" variant="light" onClick={showSidebar}>
                         Categories
                     </Button>
-                    <h2 id={"otsikko"}>ToDo</h2>
+                    <h2 id={"otsikko"}>Todo</h2>
                 </div>
                     <Task/>
             </div>
