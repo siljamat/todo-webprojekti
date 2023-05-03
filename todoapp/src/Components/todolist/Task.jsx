@@ -126,7 +126,7 @@ const Task = () => {
                     <Calendar
                         value={value}
                         onChange={onChange}
-                        tileContent={({ activeStartDate, date, view }) => {
+                        tileContent={({date}) => {
                             const dateString = date.toLocaleDateString();
 
                             const todoForDate = todolist.find((todo) => {
@@ -137,7 +137,7 @@ const Task = () => {
                             if (todoForDate) {
                                 return (
                                     <button onClick={() => handleShowDay()}>
-                                        <p>{todoForDate.taskName}</p>
+                                        <p>{"show todos"}</p>
                                     </button>
                                 )
                             }
@@ -182,7 +182,7 @@ const Task = () => {
                                                     <Icon.ThreeDotsVertical />
                                                 </button>
                                                 <ul
-                                                    class="dropdown-menu"
+                                                    className="dropdown-menu"
                                                     aria-labelledby="dropdownMenuButton1"
                                                 >
                                                     <li>
@@ -240,7 +240,7 @@ const Task = () => {
 
                                             <div className="dropdown">
                                                 <button
-                                                    class="btn"
+                                                    className="btn"
                                                     type="button"
                                                     data-bs-toggle="dropdown"
                                                     aria-expanded="false"
@@ -248,7 +248,7 @@ const Task = () => {
                                                     <Icon.ThreeDotsVertical />
                                                 </button>
                                                 <ul
-                                                    class="dropdown-menu"
+                                                    className="dropdown-menu"
                                                     aria-labelledby="dropdownMenuButton1"
                                                 >
 

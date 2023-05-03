@@ -92,7 +92,7 @@ const Addtask = () => {
                                         {
                                             cateData.map(row => {
                                                 return(
-                                                    <DropdownItem onClick={e => setcategory(row.cateName)} value={category}>{row.cateName}
+                                                    <DropdownItem onClick={() => setcategory(row.cateName)} value={category}>{row.cateName}
                                                         <span style={{backgroundColor: row.cateColor}} className="circle"></span>
                                                     </DropdownItem>
                                                 )

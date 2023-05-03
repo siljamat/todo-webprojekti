@@ -64,19 +64,19 @@ const Addcategories = () => {
                 </div>
                 <div className="catebtns">
                     <DropdownButton variant="secondary" title="Choose Color">
-                        <Dropdown.Item onClick={(e) => setcateColor('pink')} value={cateColor}>
+                        <Dropdown.Item onClick={() => setcateColor('pink')} value={cateColor}>
                             Pink <span className="dotPink"></span>
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={(e) => setcateColor('deepskyblue')} value={cateColor}>
+                        <Dropdown.Item onClick={() => setcateColor('deepskyblue')} value={cateColor}>
                             Blue <span className="dotBlue"></span>
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={(e) => setcateColor('yellow')} value={cateColor}>
+                        <Dropdown.Item onClick={() => setcateColor('yellow')} value={cateColor}>
                             Yellow <span className="dotYellow"></span>
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={(e) => setcateColor('orange')} value={cateColor}>
+                        <Dropdown.Item onClick={() => setcateColor('orange')} value={cateColor}>
                             Orange <span className="dotOrange"></span>
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={(e) => setcateColor('mediumseagreen')} value={cateColor}>
+                        <Dropdown.Item onClick={() => setcateColor('mediumseagreen')} value={cateColor}>
                             Green <span className="dotGreen"></span>
                         </Dropdown.Item>
                     </DropdownButton>

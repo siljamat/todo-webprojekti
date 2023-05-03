@@ -29,17 +29,6 @@ const Sidebar = () => {
             .catch((err) => console.log(err));
     }, []);
 
-    /**
-     * Adds a new category to the API and reloads the page.
-     * @param {Event} e - The form submit event.
-     */
-    const addCategory = (e) => {
-        e.preventDefault();
-        const dataObj = { cateName: e.target[0].value };
-        axios.post('http://localhost:2000/category', dataObj);
-        alert('Category added successfully');
-        window.location.reload();
-    };
 
     /**
      * Deletes a category from the API by its ID and reloads the page.

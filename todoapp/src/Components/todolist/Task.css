@@ -58,6 +58,7 @@
   margin: 20px auto;
 }
 
+
 @media screen and (max-width: 1150px) {
   .cateRow {
     grid-template-columns: 1fr 2fr 0.5fr;

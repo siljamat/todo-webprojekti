@@ -7,7 +7,6 @@ import './Sidebar.css'
 import Sidebar from "./Sidebar";
 import {Button, Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
 import Addtask from "../todolist/Addtask";
-import Editcategories from "./Editcategories";
 import * as Icon from "react-bootstrap-icons";
 
 /**

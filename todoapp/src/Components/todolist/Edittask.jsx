@@ -12,15 +12,12 @@ import DropdownItem from "react-bootstrap/DropdownItem";
 
 /**
  * Edittask component for editing a todo item.
- * @param {object} props - Component props.
- * @param {object} props.user - User object.
  * @returns {JSX.Element} - Rendered component.
  */
-const Edittask = ({ user }) => {
+const Edittask = () => {
     const navigate = useNavigate();
     const { _id } = useParams();
 
-    const [todolistData, settodolistData] = useState({});
     const [taskName, settaskName] = useState("");
     const [category, setcategory] = useState("");
 
@@ -29,7 +26,6 @@ const Edittask = ({ user }) => {
             .get(`http://localhost:2000/todolist/${_id}`)
             .then(async (res) => {
                 const rawtodolistData = await res.data[0];
-                settodolistData(rawtodolistData);
                 settaskName(rawtodolistData.taskName);
                 setcategory(rawtodolistData.category);
             })
@@ -99,7 +95,7 @@ const Edittask = ({ user }) => {
                             {
                                 cateData.map(row => {
                                     return(
-                                        <DropdownItem onClick={e => setcategory(row.cateName)} value={category}>{row.cateName}
+                                        <DropdownItem onClick={() => setcategory(row.cateName)} value={category}>{row.cateName}
                                         <span style={{backgroundColor: row.cateColor}} className="circle"></span>
                                         </DropdownItem>
                                     )
