@@ -1,3 +1,7 @@
+/**
+ Express server for managing Todo and Category apps.
+ @module server
+ */
 // Require the express library
 const express = require("express");
 
@@ -25,6 +29,12 @@ app.use("/todolist", require("./Routes/Todoapp"));
 // Define a route for the Category app and use the Category router
 app.use("/category", require("./Routes/Category"));
 
+/**
+ Handle connected event on the database connection.
+ @event connected
+ @param {Error} err - The error object, if any.
+ @returns {void}
+ */
 // Listen for the "connected" event on the database connection
 conn.connection.on("connected", (err) => {
     if(err){
@@ -34,6 +44,12 @@ conn.connection.on("connected", (err) => {
     }
 })
 
+/**
+ Start the server and listen on the specified port.
+ @function
+ @param {number} port - The port number to listen on.
+ @returns {void}
+ */
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
     console.log("server is started");
@@ -61,12 +77,3 @@ const todoSchema = new mongoose.Schema({
 
 // Define a model for your todo items using the schema
 const Todo = mongoose.model('Todo', todoSchema);
-
-// Use the Todo model to interact with the database
-Todo.find()
-    .then((todos) => {
-        console.log('All todos:', todos);
-    })
-    .catch((error) => {
-        console.log('Error:', error);
-    });
