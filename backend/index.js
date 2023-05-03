@@ -54,26 +54,3 @@ conn.connection.on("connected", (err) => {
 app.listen(PORT, () => {
     console.log("server is started");
 })
-
-// Require the mongoose library and the database connection file
-const mongoose = require('mongoose');
-const db = require('./db');
-
-// Define a schema for your todo items
-const todoSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    completed: {
-        type: Boolean,
-        default: false
-    }
-});
-
-// Define a model for your todo items using the schema
-const Todo = mongoose.model('Todo', todoSchema);
