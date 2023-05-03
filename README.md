@@ -5,6 +5,9 @@ erilaisia tapahtumia ja tehtäviä sekä kategorisoimaan niitä.
 
 Projektin tekoon on käytetty MERN-stackia ja REST-rajapintaa. 
 
+Serverin käynnistys: npm run server
+Todoappin käynnistys: npm start
+
 REST-rajapinnan kuvaus:
 
 Rest-rajapinta käyttää kategorioille ja tehtäville POST, PUT, GET ja DELETE toimintoja, jotka kaikki ovat HTTP-pyyntöjä.
