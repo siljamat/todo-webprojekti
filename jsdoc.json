@@ -1,0 +1,18 @@
+{
+  "source": {
+    "include": [
+      "backend/db.js",
+      "backend/index.js",
+      "backend/Controllers",
+      "backend/Models",
+      "backend/Routes",
+      "todoapp/src",
+      "todoapp/src/Components",
+      "todoapp/src/Components/category",
+      "todoapp/src/Components/todolist"
+    ]
+  },
+  "opts": {
+    "destination": "./docs"
+  }
+}
