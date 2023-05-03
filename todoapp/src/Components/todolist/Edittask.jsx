@@ -23,7 +23,6 @@ const Edittask = ({ user }) => {
     const [todolistData, settodolistData] = useState({});
     const [taskName, settaskName] = useState("");
     const [category, setcategory] = useState("");
-    const [origName, setOrigName] = useState("");
 
     useEffect(() => {
         axios

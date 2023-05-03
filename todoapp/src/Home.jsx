@@ -1,24 +1,30 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Addtask from './Components/todolist/Addtask'
+import Addtask from './Components/todolist/Addtask';
 import Task from './Components/todolist/Task';
-import Date from './Components/Date';
-import './Home.css'
+import './Home.css';
 import Sidebar from './Components/category/Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Container, Offcanvas } from 'react-bootstrap';
-import {useState} from 'react'
-import Addcategories from "./Components/category/Addcategories";
+import { Button, Offcanvas } from 'react-bootstrap';
+import { useState } from 'react';
 
-
+/**
+ * Renders the Home component, which includes a navigation bar,
+ * a clock display and a list of tasks.
+ * @returns {JSX.Element} The Home component.
+ */
 const Home = () => {
-    const navigate = useNavigate()
     const [show, setShow] = useState(false);
+
+    /**
+     * Closes the sidebar.
+     */
     const closeSidebar = () => setShow(false);
+
+    /**
+     * Shows the sidebar.
+     */
     const showSidebar = () => setShow(true);
 
-    // Render the Home component, which includes a navigation bar,
-    // a clock display and a list of tasks
     return (
         <>
             <div className='backg'>
@@ -28,18 +34,18 @@ const Home = () => {
                     </Button>
                     <h2 id={"otsikko"}>Todo</h2>
                 </div>
-                    <Task/>
+                <Task/>
             </div>
             <div className='sidebar'>
                 <Sidebar />
             </div>
-                <Offcanvas show={show} onHide={closeSidebar}>
-                    <Offcanvas.Header className="position-absolute top-0 end-0" closeButton>
-                    </Offcanvas.Header>
-                    <Offcanvas.Body>
-                        <Sidebar />
-                    </Offcanvas.Body>
-                </Offcanvas>
+            <Offcanvas show={show} onHide={closeSidebar}>
+                <Offcanvas.Header className="position-absolute top-0 end-0" closeButton>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    <Sidebar />
+                </Offcanvas.Body>
+            </Offcanvas>
             <Addtask/>
         </>
     );
