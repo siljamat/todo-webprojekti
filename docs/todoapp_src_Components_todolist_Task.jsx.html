@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: todoapp/src/Components/todolist/Task.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: todoapp/src/Components/todolist/Task.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
+import * as Icon from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
+import "./Task.css";
+import "./Calendar.css";
+import axios from "axios";
+import DatePicker from "react-date-picker";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import {Nav, Navbar, Container} from 'react-bootstrap';
+
+/**
+ * Component for managing tasks and displaying them in a calendar view
+ * @returns {JSX.Element} Task component
+ */
+const Task = () => {
+    const [todolist, setTodolist] = useState([]);
+    const [value, onChange] = useState(new Date());
+    const [showAll, setShowAll] = useState(false);
+    const [showList, setShowList] = useState(false); // new state for showing all tasks
+    const [cateData, setcateData] = useState([]); // Initializing state for category data fetched from server
+
+    const navigate = useNavigate();
+
+    /**
+     * Fetches category data from server on initial load using useEffect hook
+     */
+    useEffect(() => {
+        axios.get("http://localhost:2000/category")
+            .then(async (res) => {
+                const rawcateData = await res.data;
+                setcateData(rawcateData);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
+    /**
+     * Fetches task data from server on initial load using useEffect hook
+     */
+    useEffect(() => {
+        axios.get("http://localhost:2000/todolist")
+            .then(async (res) => {
+                const rawTodolist = await res.data;
+                setTodolist(rawTodolist);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
+    /**
+     * Filters the list of tasks based on selected date and view mode
+     * @type {Array} List of filtered tasks
+     */
+    let filterlist = todolist.filter((row) => {
+        const newdate = row.date;
+        const d = new Date(newdate);
+        const selMonth = value.getMonth();
+        const rowMonth = d.getMonth();
+
+        if (showAll) {
+            return rowMonth === selMonth;
+        } else {
+            const selDate = value.toLocaleDateString();
+            const rowDate = d.toLocaleDateString();
+            return selDate === rowDate;
+        }
+    });
+
+    /**
+     * Deletes a task with the specified id from the database
+     * @param {string} _id - The id of the task to be deleted
+     */
+    const deleteHandler = async (_id) => {
+        await axios.delete(`http://localhost:2000/todolist/${_id}`);
+        alert("Task Deleted Successfully");
+        window.location.reload();
+    };
+
+    /**
+     * Sets the showAll state to true and hides the task list if it is currently visible
+     */
+    const handleShowAll = () => {
+        setShowAll(true);
+        setShowList(false);
+    };
+
+    /**
+     * Sets the showAll state to false and hides the task list if it is currently visible
+     */
+    const handleShowDay = () => {
+        setShowAll(false);
+        setShowList(false);
+    };
+
+    /**
+     * Sets the showList state to true and hides the calendar view if it is currently visible
+     */
+    const handleShowList = () => {
+        setShowList(true);
+        setShowAll(false);
+    };
+
+    return (
+        &lt;>
+            &lt;Navbar bg="light" expand="md">
+                &lt;Container>
+                    &lt;Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
+                    &lt;Navbar.Collapse id="basic-navbar-nav">
+                        &lt;Nav className="me-auto button-group">
+                            &lt;button className="text-nowrap" onClick={handleShowAll}>
+                                Calendar
+                            &lt;/button>
+                            &lt;button
+                                className="text-nowrap" onClick={handleShowDay}>
+                                &lt;DatePicker clearIcon={null} onChange={onChange} value={value} />
+                            &lt;/button>
+                            &lt;button className="text-nowrap" onClick={handleShowList}>
+                                Show all as a list
+                            &lt;/button>
+                        &lt;/Nav>
+                    &lt;/Navbar.Collapse>
+                &lt;/Container>
+            &lt;/Navbar>
+            &lt;div className="kalenteri">
+                {showAll ? (
+                    //Calendar
+                    &lt;Calendar
+                        value={value}
+                        onChange={onChange}
+                        tileContent={({ activeStartDate, date, view }) => {
+                            const dateString = date.toLocaleDateString();
+
+                            const todoForDate = todolist.find((todo) => {
+                                const todoDate = new Date(todo.date).toLocaleDateString();
+                                return todoDate === dateString;
+                            });
+
+                            if (todoForDate) {
+                                return (
+                                    &lt;button onClick={() => handleShowDay()}>
+                                        &lt;p>{todoForDate.taskName}&lt;/p>
+                                    &lt;/button>
+                                )
+                            }
+                        }}
+                    />
+                ) : showList ? (
+                    // NShow all todos as a list
+                    &lt;div>
+                        {todolist.map((row) => {
+                            const newdate = row.date;
+                            const d = new Date(newdate);
+                            let cateColor;
+                            const category = cateData.find((cate) => cate.cateName === row.category);
+                            if (category) {
+                                cateColor = category.cateColor;
+                                console.log(cateColor)
+                            }
+                            return (
+                                &lt;>
+                                    &lt;div className="catecont">
+                                        &lt;div className="cateRow">
+                                            &lt;div>
+                                                &lt;div className="time">
+                                                    &lt;p>
+                                                        {d.getDate().toString().padStart(2, '0')}.{(d.getMonth() + 1).toString().padStart(2, '0')}.{d.getFullYear()} &lt;br/> {d.getHours()}:{d.getMinutes()}
+                                                    &lt;/p>
+                                                &lt;/div>
+                                            &lt;/div>
+
+                                            &lt;div className="nme">
+                                                &lt;h3>{row.taskName.toUpperCase()}&lt;/h3>
+                                                &lt;p className="category" style={{backgroundColor: cateColor}}>{row.category}&lt;/p>
+                                            &lt;/div>
+
+                                            &lt;div className="dropdown">
+                                                &lt;button
+                                                    className="btn"
+                                                    type="button"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                >
+                                                    &lt;Icon.ThreeDotsVertical />
+                                                &lt;/button>
+                                                &lt;ul
+                                                    class="dropdown-menu"
+                                                    aria-labelledby="dropdownMenuButton1"
+                                                >
+                                                    &lt;li>
+                                                        &lt;button type='button' className='navbtn dropdown-item ' onClick={() => navigate(`/edittask/${row._id}`)}>
+                                                            &lt;Icon.PencilSquare/>
+                                                            Edit
+                                                        &lt;/button>
+                                                    &lt;/li>
+                                                    &lt;li>
+                                                        &lt;button
+                                                            type="button"
+                                                            className="navbtn dropdown-item "
+                                                            onClick={() => deleteHandler(row._id)}
+                                                        >
+                                                            &lt;Icon.XLg />
+                                                            Delete
+                                                        &lt;/button>
+                                                    &lt;/li>
+                                                &lt;/ul>
+                                            &lt;/div>
+                                        &lt;/div>
+                                    &lt;/div>
+                                &lt;/>
+                            );
+                        })}
+                    &lt;/div>
+                ) : (
+                    //Show all todos one by one
+                    &lt;div>
+                        {filterlist.map((row) => {
+                            const newdate = row.date;
+                            const d = new Date(newdate);
+                            let cateColor;
+                            const category = cateData.find((cate) => cate.cateName === row.category);
+                            if (category) {
+                                cateColor = category.cateColor;
+                                console.log(cateColor)
+                            }
+                            return (
+                                &lt;>
+                                    &lt;div className="catecont">
+                                        &lt;div className="cateRow">
+                                            &lt;div>
+                                                &lt;div className="time">
+                                                    &lt;p>
+                                                        {d.getHours()}:{d.getMinutes()}
+                                                    &lt;/p>
+                                                &lt;/div>
+                                            &lt;/div>
+
+                                            &lt;div className="nme">
+                                                &lt;h3>{row.taskName.toUpperCase()}&lt;/h3>
+                                                &lt;p className="category" style={{backgroundColor: cateColor}}>{row.category}&lt;/p>
+                                            &lt;/div>
+
+                                            &lt;div className="dropdown">
+                                                &lt;button
+                                                    class="btn"
+                                                    type="button"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                >
+                                                    &lt;Icon.ThreeDotsVertical />
+                                                &lt;/button>
+                                                &lt;ul
+                                                    class="dropdown-menu"
+                                                    aria-labelledby="dropdownMenuButton1"
+                                                >
+
+                                                    &lt;li>
+                                                        &lt;button type='button' className='navbtn dropdown-item ' onClick={() => navigate(`/edittask/${row._id}`)}>
+                                                            &lt;Icon.PencilSquare/>
+                                                            Edit
+                                                        &lt;/button>
+                                                    &lt;/li>
+                                                    &lt;li>
+                                                        &lt;button
+                                                            type="button"
+                                                            className="navbtn dropdown-item "
+                                                            onClick={() => deleteHandler(row._id)}
+                                                        >
+                                                            &lt;Icon.XLg />
+                                                            Delete
+                                                        &lt;/button>
+                                                    &lt;/li>
+                                                &lt;/ul>
+                                            &lt;/div>
+                                        &lt;/div>
+                                    &lt;/div>
+                                &lt;/>
+                            );
+                        })}
+                    &lt;/div>
+                )}
+            &lt;/div>
+        &lt;/>
+    )};
+export default Task;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database.html">database</a></li><li><a href="module-server.html">server</a></li></ul><h3>Events</h3><ul><li><a href="module-server.html#~event:connected">connected</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddCategory">AddCategory</a></li><li><a href="global.html#AddTodolist">AddTodolist</a></li><li><a href="global.html#Addcategories">Addcategories</a></li><li><a href="global.html#Addtask">Addtask</a></li><li><a href="global.html#Categories">Categories</a></li><li><a href="global.html#Catetask">Catetask</a></li><li><a href="global.html#D">D</a></li><li><a href="global.html#Editcategories">Editcategories</a></li><li><a href="global.html#Edittask">Edittask</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routing">Routing</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#cateSchema">cateSchema</a></li><li><a href="global.html#delCategory">delCategory</a></li><li><a href="global.html#delTodolist">delTodolist</a></li><li><a href="global.html#getAllCategory">getAllCategory</a></li><li><a href="global.html#getAllTodolist">getAllTodolist</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getTodolist">getTodolist</a></li><li><a href="global.html#routes/Category">routes/Category</a></li><li><a href="global.html#routes/Todoapp">routes/Todoapp</a></li><li><a href="global.html#todoSchema">todoSchema</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateTodolist">updateTodolist</a></li><li><a href="global.html#userModel">userModel</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 03 2023 14:03:55 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

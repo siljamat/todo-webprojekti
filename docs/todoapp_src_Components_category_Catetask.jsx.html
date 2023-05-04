@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: todoapp/src/Components/category/Catetask.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: todoapp/src/Components/category/Catetask.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { useState , useEffect } from 'react';
+import { useParams , useNavigate} from 'react-router-dom';
+import axios from 'axios';
+import './Catetask.css'
+import './Sidebar.css'
+import Sidebar from "./Sidebar";
+import {Button, Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
+import Addtask from "../todolist/Addtask";
+import Editcategories from "./Editcategories";
+import * as Icon from "react-bootstrap-icons";
+
+/**
+ * This component displays the tasks associated with a particular category.
+ */
+const Catetask = () => {
+
+    const navigate = useNavigate()
+
+    // Get the category name from the URL using useParams() hook
+    const {cateName} = useParams()
+
+    // Define state to hold the task list data
+    const [todolist, settodolist] = useState([])
+
+    // Use useEffect() hook to fetch the task list data from server when the component mounts
+    useEffect(() => {
+        axios.get(`http://localhost:2000/todolist`)
+            .then(async (res) => {
+                const rawtodolist = await res.data
+                settodolist(rawtodolist)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
+
+    /**
+     * Filters the task list data by category name.
+     *
+     * @param {object} row - A task object in the task list.
+     * @returns {boolean} - Returns true if the task belongs to the specified category, false otherwise.
+     */
+    let cateFil = todolist.filter((row) => {
+        if (row.category === cateName) {
+            return (row)
+        }
+    })
+
+    const [show, setShow] = useState(false);
+
+    /**
+     * Closes the sidebar.
+     */
+    const closeSidebar = () => setShow(false);
+
+    /**
+     * Shows the sidebar.
+     */
+    const showSidebar = () => setShow(true);
+
+    /**
+     * Deletes a task from the task list.
+     *
+     * @param {string} _id - The ID of the task to be deleted.
+     */
+    const deleteHandler = async (_id) => {
+        await axios.delete(`http://localhost:2000/todolist/${_id}`);
+        alert("Task Deleted Successfully");
+        window.location.reload();
+    };
+
+
+    /**
+     * Render a component with category name and navigation bar,
+     * along with a message indicating no todos in this category.
+     * @param {string} cateName - The name of the category being displayed
+     * @param {Array} cateFil - The filtered list of todos for the category
+     * @param {Function} showSidebar - The function to show the sidebar
+     * @param {Function} closeSidebar - The function to close the sidebar
+     */
+    if (!cateFil.length) {
+        return &lt;>
+            &lt;div className="bg">
+                &lt;h2>ToDos in {cateName}&lt;/h2>
+                &lt;Button id="sidebtn" variant="light" onClick={showSidebar}>
+                    Categories
+                &lt;/Button>
+                &lt;div id="navbar">
+                    &lt;Navbar id="nav" bg="light" expand="md">
+                        &lt;Container>
+                            &lt;Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2"/>
+                            &lt;Navbar.Collapse id="basic-navbar-nav">
+                                &lt;Nav className="me-auto button-group">
+                                    &lt;button className="text-nowrap" onClick={() => navigate('/Home')}>
+                                        Back to main screen
+                                    &lt;/button>
+                                &lt;/Nav>
+                            &lt;/Navbar.Collapse>
+                        &lt;/Container>
+                    &lt;/Navbar>
+                &lt;/div>
+                &lt;div className="cont">
+                    &lt;h3>No todo's in this category&lt;/h3>
+                &lt;/div>
+            &lt;/div>
+            &lt;div className='sidebar'>
+                &lt;Sidebar/>
+            &lt;/div>
+            &lt;Offcanvas show={show} onHide={closeSidebar}>
+                &lt;Offcanvas.Header className="position-absolute top-0 end-0" closeButton>
+                &lt;/Offcanvas.Header>
+                &lt;Offcanvas.Body>
+                    &lt;Sidebar/>
+                &lt;/Offcanvas.Body>
+            &lt;/Offcanvas>
+            &lt;Addtask/>
+        &lt;/>
+    } /**
+     * Renders the ToDos in the selected category if there are any, otherwise renders a message indicating that there are no ToDos in that category.
+     *
+     * @param {Object} props - The component props.
+     * @param {string} props.cateName - The name of the selected category.
+     * @param {Array} props.cateFil - An array containing the ToDos in the selected category.
+     * @param {Function} props.showSidebar - A function to show the sidebar.
+     * @param {Boolean} props.show - A boolean indicating whether the sidebar should be displayed or not.
+     * @param {Function} props.closeSidebar - A function to close the sidebar.
+     * @param {Function} props.navigate - A function to navigate to a different route.
+     * @param {Function} props.deleteHandler - A function to delete a ToDo.
+     * @returns {JSX.Element} - A React component representing the ToDos in the selected category.
+     */
+    else {
+        return (
+            &lt;>
+                &lt;div className="bg">
+                    &lt;h2>ToDos in {cateName}&lt;/h2>
+                    &lt;Button id="sidebtn" variant="light" onClick={showSidebar}>
+                        Categories
+                    &lt;/Button>
+                    &lt;div id="navbar">
+                        &lt;Navbar id="nav" bg="light" expand="md">
+                            &lt;Container>
+                                &lt;Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2"/>
+                                &lt;Navbar.Collapse id="basic-navbar-nav">
+                                    &lt;Nav className="me-auto button-group">
+                                        &lt;button className="text-nowrap" onClick={() => navigate('/Home')}>
+                                            Back to main screen
+                                        &lt;/button>
+                                    &lt;/Nav>
+                                &lt;/Navbar.Collapse>
+                            &lt;/Container>
+                        &lt;/Navbar>
+                    &lt;/div>
+
+                    &lt;div className="catcont">
+                        {
+                            cateFil.map((row) => {
+                                let newdate = row.date
+                                let d = new Date(newdate)
+
+                                let da = d.toLocaleDateString()
+
+                                return (
+                                    &lt;>
+                                        &lt;div className="cateTask">
+                                            &lt;p>{da}&lt;/p>
+                                            &lt;p>{row.taskName.toUpperCase()}&lt;/p>
+                                            &lt;div className="dropdown">
+                                                &lt;button
+                                                    className="btn"
+                                                    type="button"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                >
+                                                    &lt;Icon.ThreeDotsVertical/>
+                                                &lt;/button>
+                                                &lt;ul
+                                                    className="dropdown-menu"
+                                                    aria-labelledby="dropdownMenuButton1"
+                                                >
+                                                    &lt;li>
+                                                        &lt;button type='button' className='navbtn dropdown-item '
+                                                                onClick={() => navigate(`/edittask/${row._id}`)}>
+                                                            &lt;Icon.PencilSquare/>
+                                                            Edit
+                                                        &lt;/button>
+                                                    &lt;/li>
+                                                    &lt;li>
+                                                        &lt;button
+                                                            type="button"
+                                                            className="navbtn dropdown-item "
+                                                            onClick={() => deleteHandler(row._id)}
+                                                        >
+                                                            &lt;Icon.XLg/>
+                                                            Delete
+                                                        &lt;/button>
+                                                    &lt;/li>
+                                                &lt;/ul>
+                                            &lt;/div>
+                                        &lt;/div>
+                                    &lt;/>
+                                )
+                            })
+                        }
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className='sidebar'>
+                    &lt;Sidebar/>
+                &lt;/div>
+                &lt;Offcanvas show={show} onHide={closeSidebar}>
+                    &lt;Offcanvas.Header className="position-absolute top-0 end-0" closeButton>
+                    &lt;/Offcanvas.Header>
+                    &lt;Offcanvas.Body>
+                        &lt;Sidebar/>
+                    &lt;/Offcanvas.Body>
+                &lt;/Offcanvas>
+                &lt;Addtask/>
+            &lt;/>
+        );
+    }
+};
+
+export default Catetask;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database.html">database</a></li><li><a href="module-server.html">server</a></li></ul><h3>Events</h3><ul><li><a href="module-server.html#~event:connected">connected</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddCategory">AddCategory</a></li><li><a href="global.html#AddTodolist">AddTodolist</a></li><li><a href="global.html#Addcategories">Addcategories</a></li><li><a href="global.html#Addtask">Addtask</a></li><li><a href="global.html#Categories">Categories</a></li><li><a href="global.html#Catetask">Catetask</a></li><li><a href="global.html#D">D</a></li><li><a href="global.html#Editcategories">Editcategories</a></li><li><a href="global.html#Edittask">Edittask</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routing">Routing</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#cateSchema">cateSchema</a></li><li><a href="global.html#delCategory">delCategory</a></li><li><a href="global.html#delTodolist">delTodolist</a></li><li><a href="global.html#getAllCategory">getAllCategory</a></li><li><a href="global.html#getAllTodolist">getAllTodolist</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getTodolist">getTodolist</a></li><li><a href="global.html#routes/Category">routes/Category</a></li><li><a href="global.html#routes/Todoapp">routes/Todoapp</a></li><li><a href="global.html#todoSchema">todoSchema</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateTodolist">updateTodolist</a></li><li><a href="global.html#userModel">userModel</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 03 2023 14:03:55 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

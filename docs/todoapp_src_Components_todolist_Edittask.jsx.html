@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: todoapp/src/Components/todolist/Edittask.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: todoapp/src/Components/todolist/Edittask.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Import necessary packages
+import React from 'react';
+import './Addtask.css'
+import { useState, useEffect } from 'react';
+import axios from 'axios'
+import { useNavigate , useParams } from 'react-router-dom'
+import {Button, Container, DropdownButton, Nav, Navbar, Offcanvas} from "react-bootstrap";
+import Sidebar from "../category/Sidebar";
+import Addtask from "./Addtask";
+import './editTodo.css'
+import DropdownItem from "react-bootstrap/DropdownItem";
+
+/**
+ * Edittask component for editing a todo item.
+ * @param {object} props - Component props.
+ * @param {object} props.user - User object.
+ * @returns {JSX.Element} - Rendered component.
+ */
+const Edittask = ({ user }) => {
+    const navigate = useNavigate();
+    const { _id } = useParams();
+
+    const [todolistData, settodolistData] = useState({});
+    const [taskName, settaskName] = useState("");
+    const [category, setcategory] = useState("");
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:2000/todolist/${_id}`)
+            .then(async (res) => {
+                const rawtodolistData = await res.data[0];
+                settodolistData(rawtodolistData);
+                settaskName(rawtodolistData.taskName);
+                setcategory(rawtodolistData.category);
+            })
+            .catch((err) => console.log(err));
+    }, [_id]);
+
+    const [cateData, setcateData] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:2000/category")
+            .then(async (res) => {
+                const rawcateData = await res.data;
+                setcateData(rawcateData);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
+    const updateHandler = (e) => {
+        e.preventDefault();
+        settaskName(taskName.toLowerCase());
+
+        const dataObj = {
+            taskName,
+            category,
+        };
+
+        axios.put(`http://localhost:2000/todolist/${_id}`, dataObj);
+        alert("ToDo updated successfully");
+        navigate("/");
+    };
+
+    const [show, setShow] = useState(false);
+    const closeSidebar = () => setShow(false);
+    const showSidebar = () => setShow(true);
+
+    // Render the component
+    return (
+        &lt;>
+            &lt;div className='bg'>
+                &lt;h2>Edit {taskName}&lt;/h2>
+                &lt;Button id="sidebtn" variant="light" onClick={showSidebar}>
+                    Categories
+                &lt;/Button>
+                &lt;div id="navbar">
+                    &lt;Navbar id="nav" bg="light" expand="md">
+                        &lt;Container>
+                            &lt;Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
+                            &lt;Navbar.Collapse id="basic-navbar-nav">
+                                &lt;Nav className="me-auto button-group">
+                                    &lt;button className="text-nowrap" onClick={() => navigate('/Home')}>
+                                        Back to main screen
+                                    &lt;/button>
+                                &lt;/Nav>
+                            &lt;/Navbar.Collapse>
+                        &lt;/Container>
+                    &lt;/Navbar>
+                &lt;/div>
+
+                &lt;div className='cont'>
+                    &lt;div className="sis">
+                    &lt;form onSubmit={updateHandler}>
+                                &lt;p>Add the updated name and/or category below&lt;/p>
+                            &lt;input type="text" className="form-control" placeholder={taskName} onChange={e => settaskName(e.target.value)} value={taskName} />
+                        &lt;div className="btns">
+                        &lt;DropdownButton className="catebtn" variant="secondary" title="Choose category">
+                            {
+                                cateData.map(row => {
+                                    return(
+                                        &lt;DropdownItem onClick={e => setcategory(row.cateName)} value={category}>{row.cateName}
+                                        &lt;span style={{backgroundColor: row.cateColor}} className="circle">&lt;/span>
+                                        &lt;/DropdownItem>
+                                    )
+                                })
+                            }
+                        &lt;/DropdownButton>
+                            &lt;button type="submit" className="btn btn-light m-1">Update&lt;/button>
+                            &lt;button type="button" className="btn btn-light" onClick={() => navigate("/")}>Cancel&lt;/button>
+                        &lt;/div>
+                    &lt;/form>
+                &lt;/div>
+                &lt;/div>
+            &lt;/div>
+
+                &lt;div className='sidebar'>
+                    &lt;Sidebar />
+                &lt;/div>
+                &lt;Offcanvas show={show} onHide={closeSidebar}>
+                    &lt;Offcanvas.Header className="position-absolute top-0 end-0" closeButton>
+                    &lt;/Offcanvas.Header>
+                    &lt;Offcanvas.Body>
+                        &lt;Sidebar />
+                    &lt;/Offcanvas.Body>
+                &lt;/Offcanvas>
+                &lt;Addtask/>
+        &lt;/>
+    );
+};
+
+// Export the component
+export default Edittask;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database.html">database</a></li><li><a href="module-server.html">server</a></li></ul><h3>Events</h3><ul><li><a href="module-server.html#~event:connected">connected</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddCategory">AddCategory</a></li><li><a href="global.html#AddTodolist">AddTodolist</a></li><li><a href="global.html#Addcategories">Addcategories</a></li><li><a href="global.html#Addtask">Addtask</a></li><li><a href="global.html#Categories">Categories</a></li><li><a href="global.html#Catetask">Catetask</a></li><li><a href="global.html#D">D</a></li><li><a href="global.html#Editcategories">Editcategories</a></li><li><a href="global.html#Edittask">Edittask</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routing">Routing</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#cateSchema">cateSchema</a></li><li><a href="global.html#delCategory">delCategory</a></li><li><a href="global.html#delTodolist">delTodolist</a></li><li><a href="global.html#getAllCategory">getAllCategory</a></li><li><a href="global.html#getAllTodolist">getAllTodolist</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getTodolist">getTodolist</a></li><li><a href="global.html#routes/Category">routes/Category</a></li><li><a href="global.html#routes/Todoapp">routes/Todoapp</a></li><li><a href="global.html#todoSchema">todoSchema</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateTodolist">updateTodolist</a></li><li><a href="global.html#userModel">userModel</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 03 2023 14:03:55 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

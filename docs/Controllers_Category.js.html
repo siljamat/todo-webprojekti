@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Controllers/Category.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Controllers/Category.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Import necessary functions and model from files
+const categoryModel = require("../Models/Category");
+
+/**
+ Adds a new category to the database.
+ @async
+ @function AddCategory
+ @param {Object} req - Express request object.
+ @param {Object} res - Express response object.
+ @returns {Promise&lt;Object>} - Promise representing the saved data that is sent back to the client in the response.
+ @throws {Object} - Error object if any errors occur during the asynchronous code execution, and sends an error response back to the client.
+ */
+// Define function to add a new category to the database
+exports.AddCategory = async (req, res) => {
+    try {
+        // Create a new instance of the "Category" model with the request body as data, and save it to the database
+        const exp = await new categoryModel(req.body).save();
+        // Send the saved data back to the client in the response
+        res.json(exp);
+    } catch (err) {
+        // Handle any errors that occur during the asynchronous code execution, and send an error response back to the client
+        res.json({ err });
+    }
+};
+
+/**
+ Gets all categories from the database.
+ @async
+ @function getAllCategory
+ @param {Object} req - Express request object.
+ @param {Object} res - Express response object.
+ @returns {Promise&lt;Object>} - Promise representing the retrieved data that is sent back to the client in the response.
+ @throws {Object} - Error object if any errors occur during the asynchronous code execution, and sends an error response back to the client.
+ */
+// Define function to get all categories from the database
+exports.getAllCategory = async (req, res) => {
+    try {
+        // Retrieve all documents in the "Category" collection
+        const exp = await categoryModel.find();
+        // Send the retrieved data back to the client in the response
+        res.json(exp);
+    } catch (err) {
+        // Handle any errors that occur during the asynchronous code execution, and send an error response back to the client
+        res.json({ err });
+    }
+};
+
+/**
+ Define function to get a specific category from the database based on the provided userId parameter
+ @async
+ @function getCategory
+ @param {Object} req - Request object containing the parameters to retrieve a specific category
+ @param {Object} res - Response object to send the retrieved data or an error response back to the client
+ @param {string} req.params.userId - The user ID of the category to retrieve
+ @returns {Promise&lt;Object>} - The retrieved data from the database
+ */
+// Define function to get a specific category from the database based on the provided userId parameter
+exports.getCategory = async (req, res) => {
+    try {
+        // Retrieve a specific document in the "Category" collection based on the provided userId parameter
+        const exp = await categoryModel.find({ _id: req.params.userId });
+        // Send the retrieved data back to the client in the response
+        res.json(exp);
+    } catch (err) {
+        // Handle any errors that occur during the asynchronous code execution, and send an error response back to the client
+        res.json({ err });
+    }
+};
+
+/**
+ Define function to delete a specific category from the database based on the provided userId parameter
+ @function delCategory
+ @param {Object} req - Request object containing the parameters to delete a specific category
+ @param {Object} res - Response object to send the deleted data or an error response back to the client
+ @param {string} req.params.userId - The user ID of the category to delete
+ @returns {void}
+ */
+// Define function to delete a specific category from the database based on the provided userId parameter
+exports.delCategory = (req, res) => {
+    // Use the findOneAndDelete() method with the _id field as the query parameter to delete a specific document in the "Category" collection
+    categoryModel.findOneAndDelete({ _id: req.params.userId }, (err, data) => {
+        if (err) {
+            // Handle any errors that occur during the code execution, and send an error response back to the client
+            res.json({ err });
+        } else {
+            // Send the deleted data back to the client in the response
+            res.json(data);
+        }
+    });
+};
+
+/**
+ Define function to update a specific category in the database based on the provided userId parameter
+ @function updateCategory
+ @param {Object} req - Request object containing the parameters to update a specific category
+ @param {Object} res - Response object to send the updated data or an error response back to the client
+ @param {string} req.params.userId - The user ID of the category to update
+ @param {Object} req.body - The new data to update the category with
+ @returns {void}
+ */
+// Define function to update a specific category in the database based on the provided userId parameter
+exports.updateCategory = (req, res) => {
+    // Use the findOneAndUpdate() method with the _id field as the query parameter and the request body as the new data to update a specific document in the "Category" collection
+    categoryModel.findOneAndUpdate(
+        { _id: req.params.userId },
+        req.body,
+        { new: true },
+        (err, data) => {
+            if (err) {
+                // Handle any errors that occur during the code execution, and send an error response back to the client
+                res.json({ err });
+            } else {
+                // Send the updated data back to the client in the response
+                res.json(data);
+            }
+        }
+    );
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database.html">database</a></li><li><a href="module-server.html">server</a></li></ul><h3>Events</h3><ul><li><a href="module-server.html#~event:connected">connected</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddCategory">AddCategory</a></li><li><a href="global.html#AddTodolist">AddTodolist</a></li><li><a href="global.html#cateSchema">cateSchema</a></li><li><a href="global.html#delCategory">delCategory</a></li><li><a href="global.html#delTodolist">delTodolist</a></li><li><a href="global.html#getAllCategory">getAllCategory</a></li><li><a href="global.html#getAllTodolist">getAllTodolist</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getTodolist">getTodolist</a></li><li><a href="global.html#routes/Category">routes/Category</a></li><li><a href="global.html#routes/Todoapp">routes/Todoapp</a></li><li><a href="global.html#todoSchema">todoSchema</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateTodolist">updateTodolist</a></li><li><a href="global.html#userModel">userModel</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 03 2023 12:56:47 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

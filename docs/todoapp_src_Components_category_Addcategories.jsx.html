@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: todoapp/src/Components/category/Addcategories.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: todoapp/src/Components/category/Addcategories.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import './Addcategories.css';
+import axios from 'axios';
+import { useState } from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { DropdownButton } from 'react-bootstrap';
+
+/**
+ * Component for adding a new category.
+ * @component
+ */
+const Addcategories = () => {
+    // Set up state for the category name input
+    const [cateName, setcateName] = useState('');
+    const [cateColor, setcateColor] = useState('deepskyblue');
+
+    /**
+     * Function to handle adding a new category
+     * @function
+     * @param {object} e - The event object
+     */
+    const addCategory = (e) => {
+        e.preventDefault();
+
+        if (!cateName.trim()) {
+            alert('Please enter a name');
+            return;
+        }
+
+        // Create an object with the category name and color input
+        const dataObj = {
+            cateName,
+            cateColor,
+        };
+
+        console.log(dataObj);
+
+        // Make a POST request to the API to add the new category
+        axios.post('http://localhost:2000/category', dataObj);
+
+        // Display a success message to the user and refresh the page
+        alert('Catetask Added Successfully');
+        window.location.reload();
+    };
+
+    /**
+     * Renders the add category button and modal
+     * @returns {JSX.Element} - The rendered component
+     */
+    return (
+        &lt;>
+            {/* Form to add a new category */}
+            &lt;form onSubmit={addCategory}>
+                &lt;div className="row g-3">
+                    &lt;div className="col">
+                        &lt;input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter Category Name"
+                            onChange={(e) => setcateName(e.target.value)}
+                            value={cateName}
+                        />
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="catebtns">
+                    &lt;DropdownButton variant="secondary" title="Choose Color">
+                        &lt;Dropdown.Item onClick={(e) => setcateColor('pink')} value={cateColor}>
+                            Pink &lt;span className="dotPink">&lt;/span>
+                        &lt;/Dropdown.Item>
+                        &lt;Dropdown.Item onClick={(e) => setcateColor('deepskyblue')} value={cateColor}>
+                            Blue &lt;span className="dotBlue">&lt;/span>
+                        &lt;/Dropdown.Item>
+                        &lt;Dropdown.Item onClick={(e) => setcateColor('yellow')} value={cateColor}>
+                            Yellow &lt;span className="dotYellow">&lt;/span>
+                        &lt;/Dropdown.Item>
+                        &lt;Dropdown.Item onClick={(e) => setcateColor('orange')} value={cateColor}>
+                            Orange &lt;span className="dotOrange">&lt;/span>
+                        &lt;/Dropdown.Item>
+                        &lt;Dropdown.Item onClick={(e) => setcateColor('mediumseagreen')} value={cateColor}>
+                            Green &lt;span className="dotGreen">&lt;/span>
+                        &lt;/Dropdown.Item>
+                    &lt;/DropdownButton>
+                    &lt;button type="submit" className="btn btn-light">
+                        Add
+                    &lt;/button>
+                &lt;/div>
+            &lt;/form>
+        &lt;/>
+    );
+};
+
+export default Addcategories;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database.html">database</a></li><li><a href="module-server.html">server</a></li></ul><h3>Events</h3><ul><li><a href="module-server.html#~event:connected">connected</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddCategory">AddCategory</a></li><li><a href="global.html#AddTodolist">AddTodolist</a></li><li><a href="global.html#Addcategories">Addcategories</a></li><li><a href="global.html#Addtask">Addtask</a></li><li><a href="global.html#Categories">Categories</a></li><li><a href="global.html#Catetask">Catetask</a></li><li><a href="global.html#D">D</a></li><li><a href="global.html#Editcategories">Editcategories</a></li><li><a href="global.html#Edittask">Edittask</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routing">Routing</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#cateSchema">cateSchema</a></li><li><a href="global.html#delCategory">delCategory</a></li><li><a href="global.html#delTodolist">delTodolist</a></li><li><a href="global.html#getAllCategory">getAllCategory</a></li><li><a href="global.html#getAllTodolist">getAllTodolist</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getTodolist">getTodolist</a></li><li><a href="global.html#routes/Category">routes/Category</a></li><li><a href="global.html#routes/Todoapp">routes/Todoapp</a></li><li><a href="global.html#todoSchema">todoSchema</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateTodolist">updateTodolist</a></li><li><a href="global.html#userModel">userModel</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 03 2023 14:03:55 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

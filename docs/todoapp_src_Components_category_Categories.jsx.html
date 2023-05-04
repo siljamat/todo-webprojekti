@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: todoapp/src/Components/category/Categories.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: todoapp/src/Components/category/Categories.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import * as Icon from 'react-bootstrap-icons'
+import * as con from "react-icons/tb"; // Importing icons
+import './Categories.css'
+import { useNavigate } from 'react-router-dom'; // Importing hook to navigate to different pages
+import Addcategories from './Addcategories'; // Importing component for adding new categories
+import { useEffect } from 'react'; // Importing hook to use lifecycle methods
+import axios from 'axios'; // Importing axios for HTTP requests
+import { useState } from 'react'; // Importing hook to use state in functional component
+
+/**
+ * A React component that displays a list of categories.
+ *
+ * @return {JSX.Element} The React component.
+ */
+const Categories = () => {
+
+    const navigate = useNavigate(); // Initializing useNavigate hook for navigation to different pages
+    const [cateData, setcateData] = useState([]); // Initializing state for category data fetched from server
+
+    useEffect(() => { // Using useEffect hook to fetch category data from server on initial load
+
+        axios.get("http://localhost:2000/category")
+            .then(async (res) => {
+
+                const rawcateData = await res.data;
+
+                setcateData(rawcateData);
+
+            }).catch((err) => console.log(err))
+
+    }, []);
+
+    /**
+     * Deletes a category from the server and reloads the page.
+     *
+     * @param {string} _id The ID of the category to delete.
+     * @return {void}
+     */
+    const deleteHandler = async (_id) => { // Function to handle category deletion on clicking delete button
+        await axios.delete(`http://localhost:2000/category/${_id}`);
+
+        alert("Catetask Deleted Successfully");
+
+        window.location.reload(); // Reloading the page after category deletion
+    }
+
+    return (
+        &lt;>
+            &lt;div className="backg">
+                &lt;div className="navbar">
+                    &lt;button
+                        type="button"
+                        className="navbtn"
+                        onClick={() => navigate("/")}
+                    >
+                        &lt;Icon.List size={30}/>
+                    &lt;/button>
+                    &lt;h2>Categories&lt;/h2>
+                    &lt;Addcategories/> {/* Add categories component to add new categories */}
+                &lt;/div>
+
+                {cateData.map((row) => {
+                    // Mapping through the categories array to render each category row
+
+                    return (
+                        &lt;>
+                            &lt;div className="catecont">
+                                &lt;div className="row">
+                                    &lt;div>
+                                        &lt;con.TbChartDonut3 size={50}/>
+                                        {/* Adding chart icon */}
+                                    &lt;/div>
+                                    &lt;div className="nme">
+                                        &lt;p>
+                                            &lt;button
+                                                className="tasks"
+                                                onClick={() =>
+                                                    navigate(`/Catetask/${row.cateName}`)
+                                                }
+                                            >
+                                                View task's
+                                            &lt;/button>
+                                        &lt;/p>
+                                    &lt;/div>
+
+                                    {/* Adding dropdown menu for each category row */}
+                                    &lt;div class="dropdown">
+                                        &lt;button
+                                            class="btn"
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                        >
+                                            &lt;Icon.ThreeDotsVertical/>
+                                        &lt;/button>
+                                        &lt;ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            {/* Edit button to navigate to edit categories page */}
+                                            &lt;li>
+                                                &lt;button
+                                                    type="button"
+                                                    className="navbtn dropdown-item "
+                                                    onClick={() => navigate(`/editcategories/${row._id}`)}
+                                                >
+                                                    &lt;Icon.PencilSquare/> Edit
+                                                &lt;/button>
+                                            &lt;/li>
+                                            {/* Delete button to delete the category */}
+                                            &lt;li>
+                                                &lt;button
+                                                    type="button"
+                                                    className="navbtn dropdown-item"
+                                                    onClick={() => deleteHandler(row._id)}
+                                                >
+                                                    &lt;Icon.XLg/> Delete
+                                                &lt;/button>
+                                            &lt;/li>
+                                        &lt;/ul>
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/>
+                    );
+                })}
+            &lt;/div>
+        &lt;/>
+    );
+};
+
+export default Categories;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database.html">database</a></li><li><a href="module-server.html">server</a></li></ul><h3>Events</h3><ul><li><a href="module-server.html#~event:connected">connected</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddCategory">AddCategory</a></li><li><a href="global.html#AddTodolist">AddTodolist</a></li><li><a href="global.html#Addcategories">Addcategories</a></li><li><a href="global.html#Addtask">Addtask</a></li><li><a href="global.html#Categories">Categories</a></li><li><a href="global.html#Catetask">Catetask</a></li><li><a href="global.html#D">D</a></li><li><a href="global.html#Editcategories">Editcategories</a></li><li><a href="global.html#Edittask">Edittask</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routing">Routing</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#cateSchema">cateSchema</a></li><li><a href="global.html#delCategory">delCategory</a></li><li><a href="global.html#delTodolist">delTodolist</a></li><li><a href="global.html#getAllCategory">getAllCategory</a></li><li><a href="global.html#getAllTodolist">getAllTodolist</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getTodolist">getTodolist</a></li><li><a href="global.html#routes/Category">routes/Category</a></li><li><a href="global.html#routes/Todoapp">routes/Todoapp</a></li><li><a href="global.html#todoSchema">todoSchema</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateTodolist">updateTodolist</a></li><li><a href="global.html#userModel">userModel</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 03 2023 14:03:55 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
